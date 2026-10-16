@@ -1,0 +1,19 @@
+{
+  "release": "1.3.4",
+  "purchase_controls_checked_at_widths": [
+    1280,
+    640
+  ],
+  "permission_buttons_contained_and_non_overlapping": true,
+  "permission_keyboard_selection": true,
+  "raknet_persistence_after_reload": true,
+  "native_taskbar_relaunch_properties_checked": true,
+  "inner_to_root_redirect_checked_with_first_party_fixtures": true,
+  "shortcut_migration_backups_checked": true,
+  "unrelated_shortcuts_preserved": true,
+  "release_archive_potassium_filenames": 0,
+  "native_core_launched": false,
+  "elevated_release_launched": false,
+  "live_roblox_attachment_tested": false,
+  "roblox_anti_cheat_modified": false
+}

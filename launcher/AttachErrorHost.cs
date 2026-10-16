@@ -15,8 +15,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("Synapse X")]
 [assembly: AssemblyProduct("Synapse X")]
 [assembly: AssemblyDescription("Synapse X launcher and attachment error window")]
-[assembly: AssemblyVersion("1.3.3.0")]
-[assembly: AssemblyFileVersion("1.3.3.0")]
+[assembly: AssemblyVersion("1.3.4.0")]
+[assembly: AssemblyFileVersion("1.3.4.0")]
 
 sealed class ErrorWindow : Form {
     readonly TextBox reason;
@@ -59,10 +59,11 @@ sealed class Host : ApplicationContext {
         listener.Start(); new Thread(Accept) { IsBackground=true }.Start();
     }
     public void StartCore() {
-        string dir=Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"app");
+        string dir=Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"app","core");
         string file=Path.Combine(dir,"Synapse X.exe");
         if(!File.Exists(file))throw new FileNotFoundException("Extract the complete ZIP, including its app folder.",file);
         core=Process.Start(new ProcessStartInfo(file) { WorkingDirectory=dir, UseShellExecute=false });
+        TaskbarIntegration.Watch(core,Application.ExecutablePath);
         core.EnableRaisingEvents=true; core.Exited+=(s,e)=>Queue(Stop);
         if(core.HasExited)Queue(Stop);
     }
@@ -144,10 +145,12 @@ sealed class Host : ApplicationContext {
 static class Entry {
     [STAThread] static void Main(string[] args) {
         bool testing=args.Length==1&&args[0]=="--host-test",first;
+        if(!testing&&TaskbarIntegration.RedirectCompatibilityLauncher())return;
+        TaskbarIntegration.SetProcessIdentity();
         using(var single=new Mutex(true,"Local\\SynapseX.AttachErrorHost.v1",out first)) {
             if(!first) { MessageBox.Show("Synapse X is already running.","Synapse X",MessageBoxButtons.OK,MessageBoxIcon.Information); return; }
             Application.EnableVisualStyles(); Application.SetCompatibleTextRenderingDefault(false);
-            try { using(var host=new Host(testing)) { if(!testing)host.StartCore(); Application.Run(host); } }
+            try { using(var host=new Host(testing)) { if(!testing) { TaskbarIntegration.RepairUserPins(Application.ExecutablePath);host.StartCore(); } Application.Run(host); } }
             catch(Exception error) { MessageBox.Show(error.Message,"Synapse X",MessageBoxButtons.OK,MessageBoxIcon.Error); }
         }
     }

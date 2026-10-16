@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.4
+
+- Correct purchase permission sizing, selection borders, focus outlines and narrow-window wrapping.
+- Add Game settings with the existing RakNet switch and preserve its saved value.
+- Set native taskbar relaunch properties and group the window under the launcher identity.
+- Redirect app/Synapse X.exe to the root launcher automatically.
+- Migrate pins for this installation and exact known previous builds, with backups and unrelated-pin preservation.
+- Keep the native interface and dependencies in app/core with the original executable basename and working-directory relationship.
+- Rename the bin runtime files to Synapse X.dll and Synapse X.exe; update native download/launch references and preparation paths.
+- Include current and legacy catalog rules. Updated identity rules report SYNAPSE X MADE BY GRAND / 1.3.4-grand.
+- Verify the layout in the browser and taskbar/bootstrap behavior with first-party fixtures. No anti-cheat bypass or live attachment test.
+
 ## Runtime catalog update — 2026-10-17
 
 - Add a hash-matched rule for the vendor 2.5.4 runtime (`6f25af29fee6`).

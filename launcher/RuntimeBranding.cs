@@ -22,12 +22,12 @@ sealed class RuntimeBranding {
     readonly Func<string> remote;
     readonly object gate=new object();
     public RuntimeBranding(string installation,Func<string> remoteFetch) {
-        file=Path.Combine(Path.GetFullPath(installation),"app","bin","Potassium.dll");remote=remoteFetch;
+        file=Path.Combine(Path.GetFullPath(installation),"app","core","bin","Synapse X.dll");remote=remoteFetch;
     }
     public static string DownloadCatalog() {
         ServicePointManager.SecurityProtocol|=SecurityProtocolType.Tls12;
-        var request=(HttpWebRequest)WebRequest.Create(CatalogUrl);
-        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.3";
+        var request=(HttpWebRequest)WebRequest.Create(CatalogUrl+"?check="+DateTime.UtcNow.Ticks.ToString("x"));
+        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.4";
         request.Timeout=8000;request.ReadWriteTimeout=8000;request.AllowAutoRedirect=false;
         using(var response=(HttpWebResponse)request.GetResponse())
         using(var input=response.GetResponseStream())

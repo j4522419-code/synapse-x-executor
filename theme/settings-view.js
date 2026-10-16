@@ -17,6 +17,9 @@ UZe=Bn({__name:"settings_view",props:{username:{}},emits:["logout"],setup(props,
     {id:'client',label:'Client',glyph:'attach',description:'Choose how scripts handle in-game purchases.',rows:[
       {key:'purchases',label:'Block in-game purchases',description:'Ask for approval before a script makes a purchase. Allow skips the prompt.'}
     ]},
+    {id:'game',label:'Game',glyph:'globe',description:'Manage the runtime features available in game.',rows:[
+      {key:'rakNet',label:'Enable RakNet',description:'Make the runtime’s RakNet functions available to scripts.'}
+    ]},
     {id:'signout',label:'Sign out',glyph:'signout',description:'End your current session and return to the sign-in screen.',rows:[]}
   ];
   function icon(name){
@@ -33,7 +36,7 @@ UZe=Bn({__name:"settings_view",props:{username:{}},emits:["logout"],setup(props,
     E('input',{type:'checkbox',class:'switch',checked:X[row.key],'aria-label':row.label,onChange:event=>{X[row.key]=event.target.checked;}})
   ]);}
   function purchaseOption(value,label,glyph){return E('button',{
-    type:'button',class:Ft(['seg-option',{'is-on':X.purchases===value}]),role:'radio',
+    type:'button',class:Ft(['sx-purchase-option',{'is-on':X.purchases===value}]),role:'radio',
     'aria-label':label,'aria-checked':X.purchases===value,tabindex:X.purchases===value?0:-1,'data-purchase':value,
     onClick:()=>{X.purchases=value;},
     onKeydown:event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key))return;event.preventDefault();
@@ -42,7 +45,7 @@ UZe=Bn({__name:"settings_view",props:{username:{}},emits:["logout"],setup(props,
   },[icon(glyph),E('span',null,label)]);}
   function rowView(row){if(row.key!=='purchases')return toggle(row);return E('div',{class:'row sx-purchases-row'},[
     E('div',{class:'label'},[E('span',null,row.label),E('small',null,row.description)]),
-    E('div',{class:Ft(['seg',{'is-right':X.purchases==='allow'}]),role:'radiogroup','aria-label':'In-game purchases'},[
+    E('div',{class:'sx-purchase-options',role:'radiogroup','aria-label':'In-game purchases'},[
       purchaseOption('prompt','Ask permission','permission'),purchaseOption('allow','Allow','check')
     ])
   ]);}
