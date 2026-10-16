@@ -10,23 +10,27 @@ This project is not affiliated with the original Synapse X developers.
 The preview shows the actual frontend components in a browser test harness.
 The Windows executable and a live Roblox connection have not been tested.
 
-## Version 1.1.0
+## Version 1.2.0
 
-- Synapse X release-note text, native display-name updates, and a window-title guard.
-- Synapse X is the only theme; other palettes, custom-theme controls, and the
-  assistant entry points are removed.
-- Colored Lua/Luau syntax: blue keywords, yellow functions, orange strings, green
-  comments/numbers, and cyan types. Errors/warnings and autocomplete are enabled
-  on upgrade using the existing native Luau checker.
-- Execute swishes right, splits into letter fragments, falls with gravity, and
-  restores. The effect never delays or duplicates the execution request.
-- Attach waits for a confirmed client connection before pulsing green. A rejected
-  request or confirmation timeout pulses red. A disconnect clears green feedback.
-- Reduced-motion preferences disable decorative motion while preserving feedback.
+- New startup and sign-in presentation with three filling bars. Startup displays
+  native download percentages when available and animated bars while waiting.
+- **Ctrl+T** creates a script tab; **Ctrl+W** closes the active one. Capture-phase
+  handling prevents the editor from swallowing these shortcuts.
+- Execute jitters through 50 steps over 0.5 seconds with a brief three-layer trail,
+  then restores. Execution is invoked once and reduced-motion settings are respected.
+- Rebrand the native product name constructed from machine-code constants, plus
+  package identifiers, Windows resources and remaining native display messages.
+- Synapse X remains the only theme, with colored Lua/Luau syntax and existing
+  diagnostics. Attach retains confirmed green / failed red feedback.
+
+![Startup bars preview](docs/startup-preview.png)
+
+The startup preview uses a simulated 68% native-progress value; the actual
+application uses its existing progress events and authentication flow.
 
 ## Install
 
-1. Download `Synapse-X-v1.1.0-windows-x64.zip` from the latest release's **Assets**.
+1. Download `Synapse-X-v1.2.0-windows-x64.zip` from the latest release's **Assets**.
 2. Extract every file into a new folder.
 3. Open **Synapse X.exe**, keeping the three Microsoft runtime DLLs beside it.
 
@@ -48,8 +52,9 @@ tab, while **Execute File** sends the selected file through the existing executi
 request. **Save File** saves to the application's scripts workspace. **Attach**
 retains the native attachment flow and its error handling.
 
-Shortcuts: Ctrl+N creates a tab, Ctrl+S saves, Ctrl+Enter executes, Ctrl+B toggles
-the scripts pane, and Ctrl+backtick toggles the console.
+Shortcuts: Ctrl+T or Ctrl+N creates a tab, Ctrl+W closes the active tab, Ctrl+S
+saves, Ctrl+Enter executes, Ctrl+B toggles the scripts pane, and Ctrl+backtick
+toggles the console.
 
 ## Files and verification
 
@@ -64,7 +69,9 @@ so it cannot overwrite this customized interface.
 
 Checks cover local file import, clear/edit routing and undo boundaries, toolbar
 control states, branding, embedded assets, PE resources, checksum and relocations.
-Native code sections were verified unchanged. End-to-end Roblox attachment has
+Native code sections match the baseline except for the explicitly verified
+product-name data operands. Native authentication/session transitions and command
+wrappers are preserved. Live Windows Alt+Tab behavior and Roblox attachment have
 not been verified.
 
 See [NOTICE.txt](NOTICE.txt) and [logo edit details](theme/logo-prompt.txt).

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.0
+
+- Replace the previous loading presentation with three filling bars.
+- Restyle sign-in and show filling bars during credential checks.
+- Add capture-phase Ctrl+T / Ctrl+W for creating and closing script tabs.
+- Replace fractured-letter Execute effects with 50 jitter steps in 500 ms and a brief trail.
+- Patch the native product-name constants missed by ordinary string replacement.
+- Rebrand native display messages, package naming and Windows resources.
+- Preserve authentication, real progress events, execution and attachment behavior.
+
 ## 1.1.0
 
 - Rebrand runtime release-note text to Synapse X while preserving link targets.
