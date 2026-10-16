@@ -1,9 +1,9 @@
-# Synapse X — themed edition
+# Synapse X Executor
 
 An unofficial Synapse X inspired interface for the supplied Windows application.
 This project is not affiliated with the original Synapse X developers.
 
-**[Download v1.3.6 compatibility candidate](https://github.com/j4522419-code/synapse-x-potassium-theme/releases/tag/v1.3.6)**
+**[Download Synapse X Executor v1.3.7](https://github.com/j4522419-code/synapse-x-executor/releases/tag/v1.3.7)**
 
 This candidate addresses a possible filename regression in v1.3.4. Live attachment
 on the affected PC is still required to confirm whether it resolves the error.
@@ -11,6 +11,20 @@ on the affected PC is still required to confirm whether it resolves the error.
 ![Corrected purchase permission controls](docs/permissions-preview.jpg)
 
 The preview shows the actual Settings component in the browser test harness.
+
+## Version 1.3.7 — Synapse X Executor
+
+- Rename the repository to `synapse-x-executor` and update the launcher catalog URL.
+- Use **Synapse X Executor** for interface labels, the window title, executable
+  filenames, Windows product metadata, taskbar display name and new download.
+- Preserve migration for pins to exact known earlier Synapse X executables.
+- Keep the existing private extraction password; it is not in public documents
+  or the executable. Publish only the executor archive as an uploaded asset.
+- Retain one hidden runtime folder and the original vendor filenames/bytes.
+  Native runtime identification remains unchanged for compatibility.
+
+This remains a compatibility prerelease. The reported injection error is not
+confirmed fixed and live attachment has not been run.
 
 ## Version 1.3.6 — one runtime folder and encrypted download
 
@@ -45,7 +59,7 @@ further runtime patches. Live attachment on the affected PC remains untested.
 - Migrate pinned shortcuts targeting this installation or an exact known older
   themed executable. Preserve the original shortcut as a backup and leave
   unrelated pins alone. Launch the new root executable once after upgrading to
-  migrate old pins. The compatibility entry at `app/Synapse X.exe` also redirects
+  migrate old pins. The compatibility entry at `app/Synapse X Executor.exe` also redirects
   automatically to the root launcher.
 - Include verified catalog rules for both inspected vendor runtime versions,
   retaining the earlier rules for existing installations. Identity remains
@@ -66,7 +80,7 @@ core. The supplied runtime and live Roblox attachment remain untested.
 - Attach failures show the reason returned by the runtime in a small Windows
   window that stays above other apps. Retry dismisses the previous error.
 - Simplified home page: **Using Grand’s Internal**, Start actions, Tip of the Day
-  underneath, and a large Synapse X logo on the right. Recent Scripts and Getting
+  underneath, and a large Synapse X Executor logo on the right. Recent Scripts and Getting
   Started are removed.
 - Wider Scripts / Auto Execute pane with wrapped filenames and section labels.
   Its header arrow slides it closed; the folder button beside Settings reopens
@@ -74,10 +88,10 @@ core. The supplied runtime and live Roblox attachment remain untested.
 
 ## Install
 
-1. Download `Synapse-X-v1.3.6-windows-x64.7z` from the release’s **Assets**.
+1. Download `Synapse-X-Executor-v1.3.7-windows-x64.7z` from the release’s **Assets**.
 2. Use [7-Zip](https://www.7-zip.org/) to extract the complete archive into a **fresh folder**, using the password shared privately by the distributor.
 3. Restart Roblox to unload an older runtime.
-4. Open the **top-level Synapse X.exe**, keeping the complete `app` folder beside it.
+4. Open the **top-level Synapse X Executor.exe**, keeping the complete `app` folder beside it.
 
 The root executable launches the interface inside `app/core`, prepares compatibility
 updates, and hosts the Windows error window. Windows x64 with .NET Framework 4.x
@@ -113,9 +127,9 @@ New tabs begin with `print("Grand was here");`; existing/imported contents remai
 - Ctrl+S: save. Ctrl+Enter: execute.
 - Ctrl+B: show/hide scripts. Ctrl+backtick: toggle console.
 
-Synapse X is the only theme. The assistant and Agent Access entry points remain
+Synapse X Executor is the only theme. The assistant and Agent Access entry points remain
 removed. The native window caption, product metadata and application icon retain
-Synapse X branding. This edition keeps its own frontend preferences and tabs.
+Synapse X Executor branding. This edition keeps its own frontend preferences and tabs.
 
 ## Source and verification
 
@@ -130,7 +144,7 @@ Updater checks verify no duplicate root bin is recreated. See
 The password-protected release `.7z` is the runnable package. GitHub’s source-code ZIP contains the
 documentation, theme assets and [launcher source](launcher/AttachErrorHost.cs),
 not the full recovered native application source. The executor archive is the
-only uploaded asset on the v1.3.6 release.
+only uploaded asset on the v1.3.7 release.
 
 Tests cover Attach error extraction and propagation, native structured errors,
 the existing channel-repair path, confirmation timeouts, disconnect feedback,

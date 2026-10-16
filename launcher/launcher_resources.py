@@ -8,7 +8,7 @@ def add_taskbar_name(path):
     kernel.UpdateResourceW.argtypes=[wintypes.HANDLE,wintypes.LPCWSTR,wintypes.LPCWSTR,wintypes.WORD,wintypes.LPVOID,wintypes.DWORD];kernel.UpdateResourceW.restype=wintypes.BOOL
     kernel.EndUpdateResourceW.argtypes=[wintypes.HANDLE,wintypes.BOOL];kernel.EndUpdateResourceW.restype=wintypes.BOOL
     # RT_STRING block 1, string ID 1. The remaining fifteen entries are empty.
-    text='Synapse X'.encode('utf-16le');data=struct.pack('<HH',0,len(text)//2)+text+bytes(14*2)
+    text='Synapse X Executor'.encode('utf-16le');data=struct.pack('<HH',0,len(text)//2)+text+bytes(14*2)
     handle=kernel.BeginUpdateResourceW(str(path),False)
     if not handle:raise ctypes.WinError(ctypes.get_last_error())
     buffer=ctypes.create_string_buffer(data)

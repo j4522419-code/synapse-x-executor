@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.7 — Synapse X Executor
+
+- Rename the repository, visible interface, application executables, Windows metadata, taskbar label and new archive to Synapse X Executor.
+- Point the launcher updater at the renamed repository.
+- Preserve migration of taskbar pins to exact known older executable hashes.
+- Retain the existing private extraction password and publish only the executor archive.
+- Keep one hidden runtime folder, the original vendor filenames and unchanged runtime bytes/identity.
+- Remain a compatibility prerelease; live attachment and the reported injection error remain unconfirmed.
+
 ## 1.3.6 — encrypted download and one runtime folder
 
 - Use one app/core/bin folder; remove the root bin and mirror/seed operations.

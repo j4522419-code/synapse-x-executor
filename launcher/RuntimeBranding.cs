@@ -17,7 +17,7 @@ sealed class RuntimeEdit { public int offset {get;set;} public string before {ge
 
 sealed class RuntimeBranding {
     const string Brand="SYNAPSE X MADE BY GRAND";
-    const string CatalogUrl="https://raw.githubusercontent.com/j4522419-code/synapse-x-potassium-theme/main/runtime/catalog.json";
+    const string CatalogUrl="https://raw.githubusercontent.com/j4522419-code/synapse-x-executor/main/runtime/catalog.json";
     readonly string file;
     readonly RuntimeLayout layout;
     readonly Func<string> remote;
@@ -28,7 +28,7 @@ sealed class RuntimeBranding {
     public static string DownloadCatalog() {
         ServicePointManager.SecurityProtocol|=SecurityProtocolType.Tls12;
         var request=(HttpWebRequest)WebRequest.Create(CatalogUrl+"?check="+DateTime.UtcNow.Ticks.ToString("x"));
-        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.6";
+        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.7";
         request.Timeout=8000;request.ReadWriteTimeout=8000;request.AllowAutoRedirect=false;
         using(var response=(HttpWebResponse)request.GetResponse())
         using(var input=response.GetResponseStream())

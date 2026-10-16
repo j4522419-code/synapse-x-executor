@@ -12,17 +12,17 @@ using System.Text;
 using System.Threading;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
-[assembly: AssemblyTitle("Synapse X")]
-[assembly: AssemblyProduct("Synapse X")]
-[assembly: AssemblyDescription("Synapse X launcher and attachment error window")]
-[assembly: AssemblyVersion("1.3.6.0")]
-[assembly: AssemblyFileVersion("1.3.6.0")]
+[assembly: AssemblyTitle("Synapse X Executor")]
+[assembly: AssemblyProduct("Synapse X Executor")]
+[assembly: AssemblyDescription("Synapse X Executor launcher and attachment error window")]
+[assembly: AssemblyVersion("1.3.7.0")]
+[assembly: AssemblyFileVersion("1.3.7.0")]
 
 sealed class ErrorWindow : Form {
     readonly TextBox reason;
     public string Reason { get { return reason.Text; } }
     public ErrorWindow(string message) {
-        Text="Synapse X - Attach failed"; ClientSize=new Size(420,220);
+        Text="Synapse X Executor - Attach failed"; ClientSize=new Size(420,220);
         FormBorderStyle=FormBorderStyle.FixedDialog; MaximizeBox=false; MinimizeBox=false;
         StartPosition=FormStartPosition.CenterScreen; TopMost=true; ShowInTaskbar=true;
         BackColor=Color.FromArgb(28,29,32); ForeColor=Color.FromArgb(239,242,246);
@@ -61,7 +61,7 @@ sealed class Host : ApplicationContext {
     public void StartCore() {
         new RuntimeLayout(AppDomain.CurrentDomain.BaseDirectory).Prepare();
         string dir=Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"app","core");
-        string file=Path.Combine(dir,"Synapse X.exe");
+        string file=Path.Combine(dir,"Synapse X Executor.exe");
         if(!File.Exists(file))throw new FileNotFoundException("Extract the complete download, including its app folder.",file);
         core=Process.Start(new ProcessStartInfo(file) { WorkingDirectory=dir, UseShellExecute=false });
         TaskbarIntegration.Watch(core,Application.ExecutablePath);
@@ -149,10 +149,10 @@ static class Entry {
         if(!testing&&TaskbarIntegration.RedirectCompatibilityLauncher())return;
         TaskbarIntegration.SetProcessIdentity();
         using(var single=new Mutex(true,"Local\\SynapseX.AttachErrorHost.v1",out first)) {
-            if(!first) { MessageBox.Show("Synapse X is already running.","Synapse X",MessageBoxButtons.OK,MessageBoxIcon.Information); return; }
+            if(!first) { MessageBox.Show("Synapse X Executor is already running.","Synapse X Executor",MessageBoxButtons.OK,MessageBoxIcon.Information); return; }
             Application.EnableVisualStyles(); Application.SetCompatibleTextRenderingDefault(false);
             try { using(var host=new Host(testing)) { if(!testing) { TaskbarIntegration.RepairUserPins(Application.ExecutablePath);host.StartCore(); } Application.Run(host); } }
-            catch(Exception error) { MessageBox.Show(error.Message,"Synapse X",MessageBoxButtons.OK,MessageBoxIcon.Error); }
+            catch(Exception error) { MessageBox.Show(error.Message,"Synapse X Executor",MessageBoxButtons.OK,MessageBoxIcon.Error); }
         }
     }
 }

@@ -44,12 +44,13 @@ static class TaskbarIntegration {
     [DllImport("shell32.dll")] static extern int SHGetPropertyStoreForWindow(IntPtr window,ref Guid id,[MarshalAs(UnmanagedType.Interface)] out TaskbarStore store);
     [DllImport("ole32.dll")] static extern int PropVariantClear(ref TaskbarValue value);
     [DllImport("shell32.dll")] static extern void SHChangeNotify(uint change,uint flags,IntPtr first,IntPtr second);
+    [DllImport("user32.dll",CharSet=CharSet.Unicode)] static extern bool SetWindowTextW(IntPtr window,string text);
     public static void SetProcessIdentity() { SetCurrentProcessExplicitAppUserModelID(AppId); }
     public static string CompatibilityRoot(string directory) {
         directory=Path.GetFullPath(directory).TrimEnd(Path.DirectorySeparatorChar);
         if(!String.Equals(Path.GetFileName(directory),"app",StringComparison.OrdinalIgnoreCase))return null;
-        string parent=Path.GetDirectoryName(directory),launcher=Path.Combine(parent,"Synapse X.exe");
-        return File.Exists(launcher)&&File.Exists(Path.Combine(directory,"core","Synapse X.exe"))?launcher:null;
+        string parent=Path.GetDirectoryName(directory),launcher=Path.Combine(parent,"Synapse X Executor.exe");
+        return File.Exists(launcher)&&File.Exists(Path.Combine(directory,"core","Synapse X Executor.exe"))?launcher:null;
     }
     public static bool RedirectCompatibilityLauncher() {
         string root=CompatibilityRoot(AppDomain.CurrentDomain.BaseDirectory);if(root==null)return false;
@@ -67,6 +68,7 @@ static class TaskbarIntegration {
         finally {PropVariantClear(ref value);Marshal.ReleaseComObject(store);}
     }
     public static void SetWindowProperties(IntPtr window,string launcher) {
+        SetWindowTextW(window,"Synapse X Executor");
         Guid iid=typeof(TaskbarStore).GUID;TaskbarStore store;Marshal.ThrowExceptionForHR(SHGetPropertyStoreForWindow(window,ref iid,out store));
         try {
             // Relaunch information must precede the AppUserModelID update.
@@ -90,13 +92,14 @@ static class TaskbarIntegration {
             try {
                 link=(TaskbarShellLink)new TaskbarLink();var persist=(IPersistFile)link;persist.Load(file,2);
                 var target=new StringBuilder(32768);link.GetPath(target,target.Capacity,IntPtr.Zero,0);string old=target.ToString();
-                if(!String.Equals(Path.GetFileName(old),"Synapse X.exe",StringComparison.OrdinalIgnoreCase)||!File.Exists(old))continue;
+                string name=Path.GetFileName(old);
+                if((!String.Equals(name,"Synapse X Executor.exe",StringComparison.OrdinalIgnoreCase)&&!String.Equals(name,"Synapse X.exe",StringComparison.OrdinalIgnoreCase))||!File.Exists(old))continue;
                 string full=Path.GetFullPath(old);
-                bool local=String.Equals(full,Path.Combine(installation,"app","Synapse X.exe"),StringComparison.OrdinalIgnoreCase)||
-                    String.Equals(full,Path.Combine(installation,"app","core","Synapse X.exe"),StringComparison.OrdinalIgnoreCase);
+                bool local=String.Equals(full,Path.Combine(installation,"app","Synapse X Executor.exe"),StringComparison.OrdinalIgnoreCase)||
+                    String.Equals(full,Path.Combine(installation,"app","core","Synapse X Executor.exe"),StringComparison.OrdinalIgnoreCase);
                 if(!local&&!legacy.Contains(Digest(full)))continue;
                 string backup=file+".before-synapse-x";if(!File.Exists(backup))File.Copy(file,backup);
-                link.SetPath(launcher);link.SetArguments("");link.SetWorkingDirectory(installation);link.SetIconLocation(launcher,0);link.SetDescription("Synapse X");
+                link.SetPath(launcher);link.SetArguments("");link.SetWorkingDirectory(installation);link.SetIconLocation(launcher,0);link.SetDescription("Synapse X Executor");
                 var store=(TaskbarStore)link;Put(store,2,"\""+launcher+"\"");Put(store,3,launcher+",0");Put(store,4,"@"+launcher+",-1");Put(store,5,AppId);store.Commit();
                 persist.Save(file,true);count++;
                 IntPtr changed=Marshal.StringToCoTaskMemUni(file);try {SHChangeNotify(0x2000,5,changed,IntPtr.Zero);}finally {Marshal.FreeCoTaskMem(changed);}

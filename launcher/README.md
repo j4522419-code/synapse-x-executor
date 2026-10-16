@@ -1,6 +1,6 @@
 # Windows launcher, runtime preparation and attachment error host
 
-This first-party component starts `app/core/Synapse X.exe` with `app/core` as its working
+This first-party component starts `app/core/Synapse X Executor.exe` with `app/core` as its working
 directory, prepares known compatibility updates before native initialization,
 hosts a TopMost WinForms error window, and exits when the core process exits.
 It does not implement attachment or script execution.
@@ -8,7 +8,7 @@ It does not implement attachment or script execution.
 Build on Windows with the .NET Framework 4.x compiler from the repository root:
 
 ```powershell
-& "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe" /nologo /target:winexe /platform:x64 /optimize+ /codepage:65001 '/out:Synapse X.exe' /win32icon:theme\synapse-x.ico /win32manifest:launcher\launcher.manifest /reference:System.Windows.Forms.dll /reference:System.Drawing.dll /reference:System.Web.Extensions.dll /resource:runtime\catalog.json,SynapseX.runtime-catalog.json /resource:launcher\legacy-taskbar-hashes.json,SynapseX.legacy-taskbar-hashes.json launcher\AttachErrorHost.cs launcher\RuntimeBranding.cs launcher\RuntimeLayout.cs launcher\TaskbarIntegration.cs
+& "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe" /nologo /target:winexe /platform:x64 /optimize+ /codepage:65001 '/out:Synapse X Executor.exe' /win32icon:theme\synapse-x.ico /win32manifest:launcher\launcher.manifest /reference:System.Windows.Forms.dll /reference:System.Drawing.dll /reference:System.Web.Extensions.dll /resource:runtime\catalog.json,SynapseX.runtime-catalog.json /resource:launcher\legacy-taskbar-hashes.json,SynapseX.legacy-taskbar-hashes.json launcher\AttachErrorHost.cs launcher\RuntimeBranding.cs launcher\RuntimeLayout.cs launcher\TaskbarIntegration.cs
 ```
 
 The root launcher embeds `requireAdministrator` with `uiAccess=false`. Opening
@@ -22,7 +22,7 @@ After the original compatibility downloader finishes, the frontend calls the
 authenticated `POST /runtime/prepare` endpoint. The host reads the fixed
 `app/core/bin/Potassium.dll` path; callers cannot supply paths, patch bytes or URLs.
 The only remote catalog URL is
-`https://raw.githubusercontent.com/j4522419-code/synapse-x-potassium-theme/main/runtime/catalog.json`.
+`https://raw.githubusercontent.com/j4522419-code/synapse-x-executor/main/runtime/catalog.json`.
 A cache-refresh query is appended when checking the fixed catalog URL.
 It uses HTTPS certificate validation, TLS 1.2, bounded response sizes/timeouts
 and no redirects. A bundled catalog is available when remote retrieval fails.
@@ -38,10 +38,10 @@ to an unknown binary. The native authentication/execution wrappers are retained.
 After compilation, add the Windows string-table name used for taskbar relaunch:
 
 ```powershell
-python -c "from pathlib import Path; from launcher.launcher_resources import add_taskbar_name; add_taskbar_name(Path('Synapse X.exe').resolve())"
+python -c "from pathlib import Path; from launcher.launcher_resources import add_taskbar_name; add_taskbar_name(Path('Synapse X Executor.exe').resolve())"
 ```
 
-Copy the launcher to `app/Synapse X.exe` as the compatibility redirect. The
+Copy the launcher to `app/Synapse X Executor.exe` as the compatibility redirect. The
 native interface, dependencies and bin folder live in `app/core`, with the core
 directory as the native process working directory. The redirect only resolves
 the fixed root entry in this directory layout; it takes no path from the UI.

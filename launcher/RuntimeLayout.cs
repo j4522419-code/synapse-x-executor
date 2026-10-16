@@ -11,7 +11,7 @@ sealed class RuntimeLayout {
         // No root bin copy is created and no runtime is overwritten here.
         foreach(string name in new[]{"Potassium.dll","Potassium.exe"})
             if(!File.Exists(Path.Combine(runtime,name)))
-                throw new FileNotFoundException("The runtime is incomplete. Extract the entire download into a fresh folder before opening Synapse X.");
+                throw new FileNotFoundException("The runtime is incomplete. Extract the entire download into a fresh folder before opening Synapse X Executor.");
         RefreshVisibility();
     }
     public void RefreshVisibility() {

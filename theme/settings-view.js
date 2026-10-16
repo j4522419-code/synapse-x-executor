@@ -61,7 +61,7 @@ UZe=Bn({__name:"settings_view",props:{username:{}},emits:["logout"],setup(props,
         ...shown.map(page=>E('section',{key:page.id,'data-settings-page':page.id},[
           E('h2',null,page.label),E('p',{class:'sx-settings-intro'},page.description),
           page.id==='signout'?E('div',{class:'card sx-signout-card'},[
-            icon('signout'),E('p',null,'You will need to sign in again to use Synapse X.'),
+            icon('signout'),E('p',null,'You will need to sign in again to use Synapse X Executor.'),
             E('button',{type:'button',class:'chip-button sx-signout-action',onClick:()=>emit('logout')},'Sign out')
           ]):E('div',{class:'card'},page.rows.map(rowView))
         ])),
