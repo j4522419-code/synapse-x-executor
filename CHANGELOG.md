@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+- Replace Execute jitter and trails with green activation feedback that fades back over 0.7 seconds.
+- Restore the button on repeated clicks or when the window is hidden.
+- Keep the label still and readable; reduced motion uses a brief static color cue.
+
 ## 1.2.0
 
 - Replace the previous loading presentation with three filling bars.

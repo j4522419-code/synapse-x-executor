@@ -10,14 +10,15 @@ This project is not affiliated with the original Synapse X developers.
 The preview shows the actual frontend components in a browser test harness.
 The Windows executable and a live Roblox connection have not been tested.
 
-## Version 1.2.0
+## Version 1.2.1
 
 - New startup and sign-in presentation with three filling bars. Startup displays
   native download percentages when available and animated bars while waiting.
 - **Ctrl+T** creates a script tab; **Ctrl+W** closes the active one. Capture-phase
   handling prevents the editor from swallowing these shortcuts.
-- Execute jitters through 50 steps over 0.5 seconds with a brief three-layer trail,
-  then restores. Execution is invoked once and reduced-motion settings are respected.
+- Execute turns green on activation, then fades back to its normal color over
+  0.7 seconds. Reduced motion uses brief static green feedback. The script action
+  is still invoked once; the color indicates activation rather than execution success.
 - Rebrand the native product name constructed from machine-code constants, plus
   package identifiers, Windows resources and remaining native display messages.
 - Synapse X remains the only theme, with colored Lua/Luau syntax and existing
@@ -30,7 +31,7 @@ application uses its existing progress events and authentication flow.
 
 ## Install
 
-1. Download `Synapse-X-v1.2.0-windows-x64.zip` from the latest release's **Assets**.
+1. Download `Synapse-X-v1.2.1-windows-x64.zip` from the latest release's **Assets**.
 2. Extract every file into a new folder.
 3. Open **Synapse X.exe**, keeping the three Microsoft runtime DLLs beside it.
 

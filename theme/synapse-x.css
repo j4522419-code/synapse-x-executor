@@ -28,13 +28,11 @@ button,input,select,textarea{font-family:inherit}button:focus-visible,input:focu
 .editor-area .content>.toolbar{display:none!important}.sidebar .empty,.sidebar .section:has(.empty) .section-head{display:none!important}
 
 .titlebar.is-bare .synapse-settings{display:none!important}
-.sx-execute-overlay{position:fixed;inset:0;pointer-events:none;z-index:20000;overflow:hidden}.sx-execute-word,.sx-execute-ghost{position:absolute;display:inline-block;white-space:pre;line-height:normal;pointer-events:none;will-change:transform}.sx-execute-word>span{display:inline-block}
-.synapse-footer button.sx-executing{color:transparent!important}
 .synapse-attach{position:relative}.synapse-attach[data-sx-attach=success],.synapse-attach[data-sx-attach=failure]{color:transparent!important}
 .synapse-attach[data-sx-attach=success]::after,.synapse-attach[data-sx-attach=failure]::after{position:absolute;inset:0;display:grid;place-items:center;color:#f4fff7;font:inherit;pointer-events:none}.synapse-attach[data-sx-attach=success]::after{content:"Attached"}.synapse-attach[data-sx-attach=failure]::after{content:"Attach failed"}
 .synapse-footer .synapse-attach[data-sx-attach=success]{background:#126a40;border-color:#42c785;animation:sx-attach-green 2.4s ease-in-out infinite}.synapse-footer .synapse-attach[data-sx-attach=failure]{background:#7d2633;border-color:#da6678;animation:sx-attach-red 2.4s ease-in-out infinite}
 @keyframes sx-attach-green{0%,100%{background:#126a40;box-shadow:0 0 0 0 #36b97700}50%{background:#18804f;box-shadow:0 0 9px 1px #36b97744}}@keyframes sx-attach-red{0%,100%{background:#7d2633;box-shadow:0 0 0 0 #c94a6100}50%{background:#963141;box-shadow:0 0 9px 1px #c94a6138}}
-@media(prefers-reduced-motion:reduce){.synapse-footer .synapse-attach[data-sx-attach]{animation:none!important}.sx-execute-overlay{display:none}}
+@media(prefers-reduced-motion:reduce){.synapse-footer .synapse-attach[data-sx-attach]{animation:none!important}}
 
 .backdrop{display:none!important}.sx-startup,.auth{display:grid!important;place-items:center;flex:1;background:#121416!important;padding:24px;box-sizing:border-box;overflow:auto}
 .sx-startup-card,.auth .card{width:min(340px,100%);box-sizing:border-box;background:#191c20!important;border:1px solid #30353c!important;padding:30px!important;border-radius:3px!important;text-align:left;box-shadow:0 14px 48px #0003!important}
