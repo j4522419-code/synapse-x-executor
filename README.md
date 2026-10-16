@@ -5,93 +5,82 @@ This project is not affiliated with the original Synapse X developers.
 
 **[Download the Windows build](https://github.com/j4522419-code/synapse-x-potassium-theme/releases/latest)**
 
-![Synapse X interface preview](docs/interface-preview.png)
+![Updated start page and attached button](docs/home-preview.jpg)
 
-The preview shows the actual frontend components in a browser test harness.
-The Windows executable and a live Roblox connection have not been tested.
+The preview uses the actual frontend in a browser harness, with sample filenames
+and a simulated confirmed attachment to show the button styling.
 
-## Version 1.2.4
+## Version 1.3.0
 
-- **Ctrl+Tab** selects the next open tab. **Ctrl+Shift+Tab** selects the previous
-  tab. Both follow the displayed tab order and wrap at either end.
-
-- Disable the internal popup directly in the bundled runtime: skip its native
-  hotkey toggle and return before its menu renderer. This replaces v1.2.2's
-  ineffective settings-only change.
-- Correct the native Alt+Tab caption from **Synapse m** to **Synapse X** by fixing
-  the second name constructor's trailing character.
-- Start every new script tab with `print("Grand was here");`, including Ctrl+T
-  and the new-tab button. Existing tabs and imported scripts are preserved.
-- Agent Access remains removed, and its saved server setting remains off.
-- New startup and sign-in presentation with three filling bars. Startup displays
-  native download percentages when available and animated bars while waiting.
-- **Ctrl+T** creates a script tab; **Ctrl+W** closes the active one. Capture-phase
-  handling prevents the editor from swallowing these shortcuts.
-- Execute turns green on activation, then fades back to its normal color over
-  0.7 seconds. Reduced motion uses brief static green feedback. The script action
-  is still invoked once; the color indicates activation rather than execution success.
-- Rebrand the native product name constructed from machine-code constants, plus
-  package identifiers, Windows resources and remaining native display messages.
-- Synapse X remains the only theme, with colored Lua/Luau syntax and existing
-  diagnostics. Attach retains confirmed green / failed red feedback.
-
-![Startup bars preview](docs/startup-preview.png)
-
-The startup preview uses a simulated 68% native-progress value; the actual
-application uses its existing progress events and authentication flow.
+- Attach pulses green with a subtle outward ring after the client connection is
+  confirmed. Disconnecting clears it. Reduced motion uses static green feedback.
+- Attach failures show the reason returned by the runtime in a small Windows
+  window that stays above other apps. Retry dismisses the previous error.
+- Simplified home page: **Using Grand’s Internal**, Start actions, Tip of the Day
+  underneath, and a large Synapse X logo on the right. Recent Scripts and Getting
+  Started are removed.
+- Wider Scripts / Auto Execute pane with wrapped filenames and section labels.
+  Its header arrow slides it closed; the folder button beside Settings reopens
+  it. Ctrl+B also toggles the pane. Hidden contents cannot take keyboard focus.
 
 ## Install
 
-1. Download `Synapse-X-v1.2.4-windows-x64.zip` from the latest release's **Assets**.
-2. Extract **every file and the entire `bin` directory** into a fresh folder.
-3. Restart Roblox so an older loaded runtime is unloaded.
-4. Open **Synapse X.exe**, keeping the three Microsoft runtime DLLs beside it.
+1. Download `Synapse-X-v1.3.0-windows-x64.zip` from the release’s **Assets**.
+2. Extract the **complete ZIP** into a new folder, including the entire `app` folder.
+3. Restart Roblox to unload an older runtime.
+4. Open the **top-level Synapse X.exe**, keeping the `app` folder beside it.
 
-This version bundles its inspected runtime. Automatic vendor runtime downloads
-are skipped to keep the menu-removal patch from being overwritten. **Update the
-complete application from this repository's releases**; future Roblox changes
-may require a new compatible release. Live in-game behavior remains unverified.
+The root executable is a small launcher and Windows error-window host. It starts
+the main interface inside `app`. Windows x64 with .NET Framework 4.x is required.
+Opening the inner executable directly uses an in-app error dialog when the host
+is unavailable; that fallback does not stay above other Windows apps.
 
-Existing sign-in requirements still apply. No authentication or native execution
-implementation is replaced by this theme.
+This version bundles its inspected runtime in `app/bin`. Automatic vendor runtime
+downloads are skipped to preserve the existing internal-menu removal. Update the
+complete application from this repository’s releases; future Roblox changes may
+require a compatible release. Existing sign-in requirements still apply.
 
-## Theme
+## Editor and appearance
 
-- Centered **Synapse X** title, matching executable/process name and Windows metadata.
-- Dark-background logo in the application icon and top-left title bar.
-- Charcoal window, plain gray editor, compact tabs and a right-hand scripts pane.
-- Bottom controls: **Execute · Clear · Open File · Execute File · Save File · Attach**.
-- Gear button for Settings, with separate preferences and tabs for this edition.
-- No cosmic background, alternate-name chooser or extra launcher.
+The classic charcoal interface retains the gray editor, compact tabs, colored
+Lua/Luau syntax, diagnostics and bottom action row:
+**Execute · Clear · Open File · Execute File · Save File · Attach**.
 
-**Execute** uses the existing active-script action. **Clear** empties the editor
-with its normal undo boundaries. **Open File** loads a local script into a new
-tab, while **Execute File** sends the selected file through the existing execution
-request. **Save File** saves to the application's scripts workspace. **Attach**
-retains the native attachment flow and its error handling.
+Execute turns green and fades back over 0.7 seconds as activation feedback. Clear
+uses the editor’s undo boundaries. Open File imports a local script into a new tab;
+Execute File sends the selected file through the existing execution request.
+New tabs begin with `print("Grand was here");`; existing/imported contents remain intact.
 
-Shortcuts: Ctrl+Tab selects the next tab, Ctrl+Shift+Tab selects the previous tab,
-Ctrl+T or Ctrl+N creates a tab, Ctrl+W closes the active tab, Ctrl+S
-saves, Ctrl+Enter executes, Ctrl+B toggles the scripts pane, and Ctrl+backtick
-toggles the console.
+- Ctrl+T / Ctrl+N: new tab. Ctrl+W: close active tab.
+- Ctrl+Tab / Ctrl+Shift+Tab: next / previous tab, wrapping at either end.
+- Ctrl+S: save. Ctrl+Enter: execute.
+- Ctrl+B: show/hide scripts. Ctrl+backtick: toggle console.
 
-## Files and verification
+Synapse X is the only theme. The assistant and Agent Access entry points remain
+removed. The native window caption, product metadata and application icon retain
+Synapse X branding. This edition keeps its own frontend preferences and tabs.
 
-The release ZIP is the runnable package. GitHub's source-code ZIP contains these
-docs and customization assets, not the full native application source.
-Compare the downloaded package's SHA-256 with `SHA256SUMS.txt` on the same release.
+## Source and verification
 
-The theme stylesheet, feedback effects and icon are available in [theme/](theme/). Visible branding
-and frontend storage identifiers use Synapse X naming; existing backend service
-and documentation URLs remain compatible. The vendor GUI update check is disabled
-so it cannot overwrite this customized interface.
+The release ZIP is the runnable package. GitHub’s source-code ZIP contains the
+documentation, theme assets and [launcher source](launcher/AttachErrorHost.cs),
+not the full recovered native application source. Check the download against
+`SHA256SUMS.txt` on the same release.
 
-Checks cover local file import, clear/edit routing and undo boundaries, toolbar
-control states, branding, embedded assets, PE resources, checksum and relocations.
-Launcher code sections match the baseline except the two native name operands.
-The runtime DLL differs only at its menu-toggle branch, menu-renderer entry and
-PE checksum; the bundled injector and decompiler match the inspected originals.
-Authentication/session logic and native command wrappers are preserved. Live
-Windows Alt+Tab, the in-game popup removal and Roblox attachment remain unverified.
+Tests cover Attach error extraction and propagation, native structured errors,
+the existing channel-repair path, confirmation timeouts, disconnect feedback,
+editor controls, keyboard shortcuts, diagnostics and progress presentation.
+The first-party error host was run in its test mode: its actual Windows TopMost
+style, Unicode reason text, update/dismiss behavior, origin checks and session
+token checks passed. A browser integration test delivered the error to that
+native window. The browser preview also verified wrapping, collapse/reopen and
+the connected button’s animation styles.
 
-See [NOTICE.txt](NOTICE.txt) and [logo edit details](theme/logo-prompt.txt).
+Package checks verify embedded frontend assets, PE resources, checksums and
+relocations. The supplied core code sections retain the previous release’s
+branding-only edits; native authentication and execution wrappers are preserved.
+The bundled runtime’s internal-menu patch is unchanged from v1.2.3.
+**The supplied native core and a live Roblox attachment have not been run.**
+
+The theme keeps existing backend service/documentation URLs for compatibility.
+See [NOTICE.txt](NOTICE.txt), [theme assets](theme/), and [launcher build notes](launcher/README.md).

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0
+
+- Add a subtle outward green pulse while the client connection is confirmed; clear it on disconnect.
+- Show the runtime Attach failure reason in a small native always-on-top window.
+- Add a first-party launcher/error host, with a guarded loopback bridge and in-app fallback.
+- Simplify the start page, put Tip of the Day below Start and add a large Synapse X logo.
+- Widen the files pane, wrap filenames/section labels, and animate collapse/reopen.
+- Keep collapsed contents out of keyboard navigation and honor reduced motion.
+- Package the native core and its dependencies in `app/`; launch the root Synapse X.exe.
+
 ## 1.2.4
 
 - Add Ctrl+Tab / Ctrl+Shift+Tab to select the next / previous workspace tab in displayed order.

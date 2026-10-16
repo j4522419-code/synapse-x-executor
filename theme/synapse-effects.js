@@ -12,13 +12,13 @@
     const cleanup=()=>{if(ended)return;ended=true;clearTimeout(timer);animation.cancel();running.delete(button);cleanups.delete(cleanup);};
     running.set(button,cleanup);cleanups.add(cleanup);timer=setTimeout(cleanup,duration);
   }};
-  const buttons=new Set();let state='idle',connected=false;
-  const attachSync=()=>{for(const button of buttons){if(!button.isConnected){buttons.delete(button);continue;}button.dataset.sxAttach=state;const label=state==='success'?'Attached successfully':state==='failure'?'Attach failed. Click to retry':state==='busy'?'Attaching, waiting for client confirmation':'Attach';button.setAttribute('aria-label',label);button.setAttribute('title',label);}};
+  const buttons=new Set();let state='idle',connected=false,failureReason='';
+  const attachSync=()=>{for(const button of buttons){if(!button.isConnected){buttons.delete(button);continue;}button.dataset.sxAttach=state;const label=state==='success'?'Attached successfully':state==='failure'?'Attach failed: '+failureReason+'. Click to retry':state==='busy'?'Attaching, waiting for client confirmation':'Attach';button.setAttribute('aria-label',label);button.setAttribute('title',label);}};
   const attach={
     mount(button){if(!button)return;Promise.resolve().then(()=>{buttons.add(button);attachSync();});},
-    begin(button){if(button)buttons.add(button);state='busy';attachSync();},
-    finish(success){state=success?'success':'failure';attachSync();},
-    connection(value){connected=!!value;if(state==='busy')return;if(connected)state='success';else if(state==='success')state='idle';attachSync();}
+    begin(button){if(button)buttons.add(button);state='busy';failureReason='';window.synapseAttachErrors?.dismiss();attachSync();},
+    finish(success,reason){state=success?'success':'failure';failureReason=success?'':(reason||'No detailed reason was returned by the runtime.');if(success)window.synapseAttachErrors?.dismiss();else window.synapseAttachErrors?.show(failureReason);attachSync();},
+    connection(value){connected=!!value;if(state==='busy')return;if(connected){if(state!=='success')window.synapseAttachErrors?.dismiss();state='success';failureReason='';}else if(state==='success')state='idle';attachSync();}
   };
   window.synapseProgress=value=>typeof value==='number'&&Number.isFinite(value)?Math.max(0,Math.min(100,value)):null;
   window.synapseInstallTabShortcuts=({isReady,newTab,closeTab,cycleTab})=>{
