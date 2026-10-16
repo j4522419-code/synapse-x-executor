@@ -129,8 +129,8 @@ Updater checks verify no duplicate root bin is recreated. See
 
 The password-protected release `.7z` is the runnable package. GitHub’s source-code ZIP contains the
 documentation, theme assets and [launcher source](launcher/AttachErrorHost.cs),
-not the full recovered native application source. Check the download against
-`SHA256SUMS.txt` on the same release.
+not the full recovered native application source. The executor archive is the
+only uploaded asset on the v1.3.6 release.
 
 Tests cover Attach error extraction and propagation, native structured errors,
 the existing channel-repair path, confirmation timeouts, disconnect feedback,
