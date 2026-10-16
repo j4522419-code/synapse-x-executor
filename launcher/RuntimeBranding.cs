@@ -19,15 +19,16 @@ sealed class RuntimeBranding {
     const string Brand="SYNAPSE X MADE BY GRAND";
     const string CatalogUrl="https://raw.githubusercontent.com/j4522419-code/synapse-x-potassium-theme/main/runtime/catalog.json";
     readonly string file;
+    readonly RuntimeLayout layout;
     readonly Func<string> remote;
     readonly object gate=new object();
     public RuntimeBranding(string installation,Func<string> remoteFetch) {
-        file=Path.Combine(Path.GetFullPath(installation),"app","core","bin","Synapse X.dll");remote=remoteFetch;
+        file=Path.Combine(Path.GetFullPath(installation),"app","core","bin","Potassium.dll");remote=remoteFetch;layout=new RuntimeLayout(installation);
     }
     public static string DownloadCatalog() {
         ServicePointManager.SecurityProtocol|=SecurityProtocolType.Tls12;
         var request=(HttpWebRequest)WebRequest.Create(CatalogUrl+"?check="+DateTime.UtcNow.Ticks.ToString("x"));
-        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.4";
+        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.5";
         request.Timeout=8000;request.ReadWriteTimeout=8000;request.AllowAutoRedirect=false;
         using(var response=(HttpWebResponse)request.GetResponse())
         using(var input=response.GetResponseStream())
@@ -66,7 +67,7 @@ sealed class RuntimeBranding {
             if(!File.Exists(file))throw new FileNotFoundException("The compatibility downloader did not provide its runtime. Retry the download.");
             var info=new FileInfo(file);if(info.Length<1024||info.Length>67108864)throw new InvalidDataException("The downloaded runtime has an unexpected size.");
             byte[] original=File.ReadAllBytes(file);string digest=Digest(original);
-            foreach(var rule in rules)if(digest==rule.patched_sha256)return new{ok=true,name=rule.name,version=rule.version,user_agent=rule.user_agent,patched=false};
+            foreach(var rule in rules)if(digest==rule.patched_sha256) {layout.PublishVisibleCopies();return new{ok=true,name=rule.name,version=rule.version,user_agent=rule.user_agent,patched=false};}
             RuntimeRule selected=null;foreach(var rule in rules)if(digest==rule.source_sha256) {selected=rule;break;}
             if(selected==null)throw new InvalidDataException("The vendor runtime was updated, but no matching SYNAPSE X MADE BY GRAND branding patch is available yet. Retry after a matching patch is published to the repository. Runtime: "+digest.Substring(0,12));
             byte[] patched=(byte[])original.Clone();var touched=new HashSet<int>();
@@ -85,7 +86,7 @@ sealed class RuntimeBranding {
                 File.Copy(file,backup,true);File.Replace(temporary,file,null);
                 if(Digest(File.ReadAllBytes(file))!=selected.patched_sha256)throw new IOException("The installed runtime did not pass verification. Its previous copy is saved beside it.");
             } finally { if(File.Exists(temporary))File.Delete(temporary); }
-            return new{ok=true,name=selected.name,version=selected.version,user_agent=selected.user_agent,patched=true};
+            layout.PublishVisibleCopies();return new{ok=true,name=selected.name,version=selected.version,user_agent=selected.user_agent,patched=true};
         }
     }
 }

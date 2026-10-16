@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.5 — compatibility candidate
+
+- Reverse v1.3.4's native runtime filename changes while retaining visible Synapse X filenames.
+- Seed original-name compatibility copies in app/core/bin before native startup.
+- Keep visible branded files in the root bin folder and mirror prepared updates.
+- Preserve existing compatibility copies rather than downgrading them on every launch.
+- Bundle the exact submitted vendor 2.5.4 loader and v1.3.4 patched DLL, without new runtime code changes.
+- Retain runtime identity/version 1.3.4-grand so this test isolates filename/layout compatibility.
+- Check layout creation, copies, mirrors, settings, bootstrap, updater and package integrity with disposable fixtures.
+- Live injection remains untested; error 2147549194 is not yet confirmed fixed.
+
 ## 1.3.4
 
 - Correct purchase permission sizing, selection borders, focus outlines and narrow-window wrapping.

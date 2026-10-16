@@ -8,7 +8,7 @@ It does not implement attachment or script execution.
 Build on Windows with the .NET Framework 4.x compiler from the repository root:
 
 ```powershell
-& "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe" /nologo /target:winexe /platform:x64 /optimize+ /codepage:65001 '/out:Synapse X.exe' /win32icon:theme\synapse-x.ico /win32manifest:launcher\launcher.manifest /reference:System.Windows.Forms.dll /reference:System.Drawing.dll /reference:System.Web.Extensions.dll /resource:runtime\catalog.json,SynapseX.runtime-catalog.json /resource:launcher\legacy-taskbar-hashes.json,SynapseX.legacy-taskbar-hashes.json launcher\AttachErrorHost.cs launcher\RuntimeBranding.cs launcher\TaskbarIntegration.cs
+& "$env:WINDIR\Microsoft.NET\Framework64\v4.0.30319\csc.exe" /nologo /target:winexe /platform:x64 /optimize+ /codepage:65001 '/out:Synapse X.exe' /win32icon:theme\synapse-x.ico /win32manifest:launcher\launcher.manifest /reference:System.Windows.Forms.dll /reference:System.Drawing.dll /reference:System.Web.Extensions.dll /resource:runtime\catalog.json,SynapseX.runtime-catalog.json /resource:launcher\legacy-taskbar-hashes.json,SynapseX.legacy-taskbar-hashes.json launcher\AttachErrorHost.cs launcher\RuntimeBranding.cs launcher\RuntimeLayout.cs launcher\TaskbarIntegration.cs
 ```
 
 The root launcher embeds `requireAdministrator` with `uiAccess=false`. Opening
@@ -20,7 +20,7 @@ checks use a separately compiled asInvoker test executable.
 
 After the original compatibility downloader finishes, the frontend calls the
 authenticated `POST /runtime/prepare` endpoint. The host reads the fixed
-`app/core/bin/Synapse X.dll` path; callers cannot supply paths, patch bytes or URLs.
+`app/core/bin/Potassium.dll` path; callers cannot supply paths, patch bytes or URLs.
 The only remote catalog URL is
 `https://raw.githubusercontent.com/j4522419-code/synapse-x-potassium-theme/main/runtime/catalog.json`.
 A cache-refresh query is appended when checking the fixed catalog URL.
@@ -29,7 +29,7 @@ and no redirects. A bundled catalog is available when remote retrieval fails.
 
 Rules must match the entire source SHA-256. Every patch checks its expected
 bytes and bounds; the complete output must match the catalog's target SHA-256.
-The host keeps `Synapse X.dll.before-branding` and replaces the prepared DLL
+The host keeps `Potassium.dll.before-branding` and replaces the prepared DLL
 atomically. Already prepared hashes are accepted. Unknown source hashes wait
 with a clear message until a matching catalog entry is published. Future vendor
 code needs inspection and its own matching rule; old offsets are never applied
@@ -52,6 +52,19 @@ are set before the AppUserModelID. On upgrade it repairs this installation's
 taskbar links and links to exact previous executable hashes in the embedded
 allowlist. It backs up links and leaves unrelated targets unchanged. Migration
 runs when the new root launcher opens; it does not start old executables.
+
+Before native startup, `RuntimeLayout` seeds original-name files in
+`app/core/bin` from the visible root `bin/Synapse X.dll` and `bin/Synapse X.exe`.
+Existing internal files are preserved. After verified preparation, the visible
+copies are synchronized. Copies use fixed installation paths, verified temporary
+files and atomic replacement. Original native download/launch filename
+references are retained. Internal names are necessary compatibility copies;
+they are not evidence of an older runtime version.
+
+The candidate bundles the exact submitted 2.5.4 pair. Its DLL patch and runtime
+identity version are unchanged from v1.3.4, isolating the layout restoration.
+This does not establish that the protected loader accepts the DLL patch; live
+attachment on the affected PC remains necessary to confirm the reported error.
 
 The launcher is required for startup preparation. Building this launcher alone
 does not recover or build the supplied native application and dependencies.

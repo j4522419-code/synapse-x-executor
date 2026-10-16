@@ -3,13 +3,41 @@
 An unofficial Synapse X inspired interface for the supplied Windows application.
 This project is not affiliated with the original Synapse X developers.
 
-**[Download the Windows build](https://github.com/j4522419-code/synapse-x-potassium-theme/releases/latest)**
+**[Download v1.3.5 compatibility test](https://github.com/j4522419-code/synapse-x-potassium-theme/releases/tag/v1.3.5)**
+
+This candidate addresses a possible filename regression in v1.3.4. Live attachment
+on the affected PC is still required to confirm whether it resolves the error.
 
 ![Corrected purchase permission controls](docs/permissions-preview.jpg)
 
 The preview shows the actual Settings component in the browser test harness.
 
-## Version 1.3.4
+## Version 1.3.5 — compatibility test
+
+A failure with error `2147549194` was reported in the themed build while the
+unmodified vendor build attaches successfully on the same PC. The submitted
+files match the current vendor 2.5.4 loader and the expected v1.3.4 DLL patch.
+This rules out stale runtime versions, but not filename or DLL-patch compatibility.
+
+This candidate reverses the native filename changes first:
+
+- Restore the original native downloader and launch filename references.
+- Seed internal `Potassium.exe` / `Potassium.dll` copies in `app/core/bin` before
+  starting the interface, preserving the protected loader's original basename
+  and neighboring-file layout.
+- Keep visible **Synapse X.exe** / **Synapse X.dll** copies in the root `bin`
+  folder and synchronize them after verified runtime preparation.
+- Keep the exact uploaded DLL and loader bytes unchanged. The retained runtime
+  identity stays **SYNAPSE X MADE BY GRAND / 1.3.4-grand** to isolate this test.
+- Preserve existing native runtime copies during seeding, so startup does not
+  downgrade a previously downloaded runtime.
+
+The internal vendor names are a compatibility exception. Do not rename those
+generated files. Layout creation, mirrors, preserved settings, native filename
+references and package integrity passed isolated checks. **The injection error
+is not yet confirmed fixed; no live attachment was run.**
+
+## Retained interface features
 
 - Fix the **Ask permission / Allow** controls with a correctly sized container,
   consistent button height, contained selection borders and keyboard focus
@@ -24,12 +52,11 @@ The preview shows the actual Settings component in the browser test harness.
   unrelated pins alone. Launch the new root executable once after upgrading to
   migrate old pins. The compatibility entry at `app/Synapse X.exe` also redirects
   automatically to the root launcher.
-- Rename the runtime files to **Synapse X.dll** and **Synapse X.exe**, updating
-  the native downloader, native launch filename and launcher preparation path.
-  No filename in the release ZIP contains Potassium.
+- Keep visible runtime copies named **Synapse X.dll** and **Synapse X.exe**.
+  Internal compatibility copies retain the protected vendor component's names.
 - Include verified catalog rules for both inspected vendor runtime versions,
   retaining the earlier rules for existing installations. Identity remains
-  **SYNAPSE X MADE BY GRAND**; new rules report **1.3.4-grand**.
+  **SYNAPSE X MADE BY GRAND**; the retained rules report **1.3.4-grand**.
 
 ![Game settings](docs/game-preview.jpg)
 
@@ -54,10 +81,10 @@ core. The supplied runtime and live Roblox attachment remain untested.
 
 ## Install
 
-1. Download `Synapse-X-v1.3.4-windows-x64.zip` from the release’s **Assets**.
-2. Extract the **complete ZIP** into a new folder, including the entire `app` folder.
+1. Download `Synapse-X-v1.3.5-windows-x64.zip` from the release’s **Assets**.
+2. Extract the **complete ZIP** into a new folder, including both `app` and `bin` folders.
 3. Restart Roblox to unload an older runtime.
-4. Open the **top-level Synapse X.exe**, keeping the `app` folder beside it.
+4. Open the **top-level Synapse X.exe**, keeping both `app` and `bin` beside it.
 
 The root executable launches the interface inside `app/core`, prepares compatibility
 updates, and hosts the Windows error window. Windows x64 with .NET Framework 4.x
@@ -70,7 +97,7 @@ The original vendor downloader checks for executor compatibility updates at
 startup. The launcher then reads [runtime/catalog.json](runtime/catalog.json)
 over HTTPS from this repository, falling back to its embedded catalog if the
 remote catalog cannot be read. Only a matching, verified runtime is initialized.
-The pre-branding copy is saved as `app/core/bin/Synapse X.dll.before-branding`.
+The pre-branding copy is saved as `app/core/bin/Potassium.dll.before-branding`.
 
 New catalog entries can support future vendor runtimes without replacing the
 custom interface. An unknown runtime waits for a matching entry; retry after it
@@ -117,8 +144,8 @@ Package checks verify embedded frontend assets, PE resources, checksums,
 relocations, the administrator manifest and the embedded runtime catalog. Native
 authentication and execution wrappers are preserved. The bundled runtime keeps
 the existing internal-menu patch and changes its shared identification function
-and default HTTP User-Agent value. The native GUI also uses the branded runtime
-filenames in its download and launch references. The [identity patch source](theme/runtime-identity.py)
+and default HTTP User-Agent value. The native GUI retains the original vendor runtime filenames in its
+download and launch references. The [identity patch source](theme/runtime-identity.py)
 is included for review. All other runtime bytes match the inspected source,
 apart from the documented menu patch and PE checksum. Runtime filenames changed;
 the protected helper executable itself remains byte-for-byte unchanged.
