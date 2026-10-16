@@ -5,12 +5,29 @@ This project is not affiliated with the original Synapse X developers.
 
 **[Download the Windows build](https://github.com/j4522419-code/synapse-x-potassium-theme/releases/latest)**
 
-![Updated start page and attached button](docs/home-preview.jpg)
+![New Script opens a separate editor tab](docs/script-preview.jpg)
 
-The preview uses the actual frontend in a browser harness, with sample filenames
-and a simulated confirmed attachment to show the button styling.
+The preview uses the actual frontend in a browser harness with sample filenames.
+The editor text was entered through the interface while testing the New Script fix.
 
-## Version 1.3.0
+## Version 1.3.1
+
+- Fix New Script showing the home page over the editor. The layout’s forced
+  display rule is corrected so home appears only on **Start**.
+- Restore the main **Start** tab. The home-page New Script action, plus button
+  and Ctrl+T create separate editable script tabs with the existing template.
+- `identifyexecutor()` and its `getexecutorname()` alias report **Synapse X**,
+  version **1.3.1-grand**, so supported test reports identify this themed build.
+  This changes identification metadata only, without changing test behavior or scores.
+
+The identification function was checked before and after modification in an
+isolated CPU emulator. Checks verified the two string values, both aliases’
+shared registration, the original Lua string helper, stack balance and preserved
+registers. A live sUNC run and a results-page URL have not been generated.
+The function’s documented return format is described in the
+[official sUNC documentation](https://docs.sunc.io/Miscellaneous/identifyexecutor/).
+
+## Other features
 
 - Attach pulses green with a subtle outward ring after the client connection is
   confirmed. Disconnecting clears it. Reduced motion uses static green feedback.
@@ -25,7 +42,7 @@ and a simulated confirmed attachment to show the button styling.
 
 ## Install
 
-1. Download `Synapse-X-v1.3.0-windows-x64.zip` from the release’s **Assets**.
+1. Download `Synapse-X-v1.3.1-windows-x64.zip` from the release’s **Assets**.
 2. Extract the **complete ZIP** into a new folder, including the entire `app` folder.
 3. Restart Roblox to unload an older runtime.
 4. Open the **top-level Synapse X.exe**, keeping the `app` folder beside it.
@@ -79,7 +96,10 @@ the connected button’s animation styles.
 Package checks verify embedded frontend assets, PE resources, checksums and
 relocations. The supplied core code sections retain the previous release’s
 branding-only edits; native authentication and execution wrappers are preserved.
-The bundled runtime’s internal-menu patch is unchanged from v1.2.3.
+The bundled runtime’s internal-menu patch is unchanged from v1.2.3; v1.3.1 also
+updates its shared identification function. The [identity patch source](theme/runtime-identity.py)
+is included for review. All other runtime bytes match the inspected source, apart
+from the previously documented menu patch and the PE checksum.
 **The supplied native core and a live Roblox attachment have not been run.**
 
 The theme keeps existing backend service/documentation URLs for compatibility.

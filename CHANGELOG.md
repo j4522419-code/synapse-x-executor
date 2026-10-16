@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.1
+
+- Fix the home layout overriding Vue’s hidden state and covering newly created script editors.
+- Restore the main Start tab; New Script, the plus button and Ctrl+T create separate file tabs.
+- Report Synapse X / 1.3.1-grand through identifyexecutor and getexecutorname.
+- Limit the runtime change to identification metadata and preserve the original Lua string helper, stack frame, aliases and all other runtime bytes.
+- Verify New Script and editor input in the browser, and the native identity function in isolated CPU emulation.
+
 ## 1.3.0
 
 - Add a subtle outward green pulse while the client connection is confirmed; clear it on disconnect.

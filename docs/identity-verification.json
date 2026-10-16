@@ -1,0 +1,14 @@
+{
+  "name": "Synapse X",
+  "version": "1.3.1-grand",
+  "aliases": [
+    "identifyexecutor",
+    "getexecutorname"
+  ],
+  "isolated_emulation_passed": true,
+  "two_string_returns_verified": true,
+  "original_lua_string_helper_retained": true,
+  "stack_and_saved_registers_preserved": true,
+  "native_core_launched": false,
+  "live_sunc_tested": false
+}
