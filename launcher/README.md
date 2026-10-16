@@ -30,7 +30,10 @@ and no redirects. A bundled catalog is available when remote retrieval fails.
 Rules must match the entire source SHA-256. Every patch checks its expected
 bytes and bounds; the complete output must match the catalog's target SHA-256.
 The host keeps `Potassium.dll.before-branding` and replaces the prepared DLL
-atomically. Already prepared hashes are accepted. Unknown source hashes wait
+atomically. Explicit matching source migrations take priority over already-prepared hashes.
+This lets the previous branded runtime receive the purchase-dialog visibility
+update without being mistaken for the finished target. Otherwise, already
+prepared hashes are accepted. Unknown source hashes wait
 with a clear message until a matching catalog entry is published. Future vendor
 code needs inspection and its own matching rule; old offsets are never applied
 to an unknown binary. The native authentication/execution wrappers are retained.

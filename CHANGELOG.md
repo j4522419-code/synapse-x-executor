@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.8 — purchase confirmation visibility
+
+- Add MB_TOPMOST to the existing native purchase confirmation, retaining its foreground flag and OK/Cancel behavior.
+- Keep Cancel/error on the original non-approval path and preserve Allow mode.
+- Change only that dialog flag and PE checksum in the previous branded 2.5.4 DLL; keep the protected loader unchanged.
+- Add verified catalog rules for the vendor runtime and previous branded runtime; prefer explicit source migrations over legacy already-branded recognition.
+- Verify prompt flags/text/branches in isolated emulation and the native Windows TopMost style/Cancel result with a first-party fixture.
+- Keep the private archive password and archive-only uploaded assets.
+- Remain a compatibility prerelease; real game purchase dispatch and live attachment are untested.
+
 ## 1.3.7 — Synapse X Executor
 
 - Rename the repository, visible interface, application executables, Windows metadata, taskbar label and new archive to Synapse X Executor.

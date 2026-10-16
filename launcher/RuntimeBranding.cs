@@ -28,7 +28,7 @@ sealed class RuntimeBranding {
     public static string DownloadCatalog() {
         ServicePointManager.SecurityProtocol|=SecurityProtocolType.Tls12;
         var request=(HttpWebRequest)WebRequest.Create(CatalogUrl+"?check="+DateTime.UtcNow.Ticks.ToString("x"));
-        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.7";
+        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.8";
         request.Timeout=8000;request.ReadWriteTimeout=8000;request.AllowAutoRedirect=false;
         using(var response=(HttpWebResponse)request.GetResponse())
         using(var input=response.GetResponseStream())
@@ -67,8 +67,8 @@ sealed class RuntimeBranding {
             if(!File.Exists(file))throw new FileNotFoundException("The compatibility downloader did not provide its runtime. Retry the download.");
             var info=new FileInfo(file);if(info.Length<1024||info.Length>67108864)throw new InvalidDataException("The downloaded runtime has an unexpected size.");
             byte[] original=File.ReadAllBytes(file);string digest=Digest(original);
-            foreach(var rule in rules)if(digest==rule.patched_sha256) {layout.RefreshVisibility();return new{ok=true,name=rule.name,version=rule.version,user_agent=rule.user_agent,patched=false};}
             RuntimeRule selected=null;foreach(var rule in rules)if(digest==rule.source_sha256) {selected=rule;break;}
+            if(selected==null)foreach(var rule in rules)if(digest==rule.patched_sha256) {layout.RefreshVisibility();return new{ok=true,name=rule.name,version=rule.version,user_agent=rule.user_agent,patched=false};}
             if(selected==null)throw new InvalidDataException("The vendor runtime was updated, but no matching SYNAPSE X MADE BY GRAND branding patch is available yet. Retry after a matching patch is published to the repository. Runtime: "+digest.Substring(0,12));
             byte[] patched=(byte[])original.Clone();var touched=new HashSet<int>();
             foreach(var edit in selected.patches) {

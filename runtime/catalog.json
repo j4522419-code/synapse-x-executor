@@ -2,6 +2,119 @@
   "schema": 1,
   "runtimes": [
     {
+      "source_sha256": "6f25af29fee6bcad5a525bf13b217b445bc354f0c753abc85574a0b26fca68d8",
+      "patched_sha256": "2369a6ce65ae8510b394e46418b6b67b9e9a80586606d1d21e514b4df76aa5e8",
+      "name": "SYNAPSE X MADE BY GRAND",
+      "version": "1.3.4-grand",
+      "user_agent": "SYNAPSE X MADE BY GRAND/1.3.4-grand",
+      "patches": [
+        {
+          "offset": 360,
+          "before": "000000",
+          "after": "a4b39b"
+        },
+        {
+          "offset": 2370047,
+          "before": "dd0656042a8b92d7",
+          "after": "53594e4150534520"
+        },
+        {
+          "offset": 2370061,
+          "before": "8b4424204889442430",
+          "after": "b858204d4144452042"
+        },
+        {
+          "offset": 2370071,
+          "before": "b8bf0da588a4e923314889442420",
+          "after": "8944242848b859204752414e4400"
+        },
+        {
+          "offset": 2370086,
+          "before": "8b",
+          "after": "89"
+        },
+        {
+          "offset": 2370089,
+          "before": "20",
+          "after": "30"
+        },
+        {
+          "offset": 2370091,
+          "before": "8944",
+          "after": "8d54"
+        },
+        {
+          "offset": 2370094,
+          "before": "3848",
+          "after": "2041"
+        },
+        {
+          "offset": 2370097,
+          "before": "8d69226559f8fba24889442420488b442420488944244048b8d20da588a4e923314889442420488b4424204889442448660f6f4424300f57442440660f7f442430488d4c2430e8709a14004c8bc0488d542430488bcfe88449f1ff48833d541f25000f7624488b1d331f25004885db751f488bcfe8c646f1ffb802000000488b5c24684883c4505fc3488d1d0f1f2500488bcbe8239a14004c8bc0488bd3488bcfe83949f1ffb802000000488b5c24684883c4505fc3",
+          "after": "17000000488bcfe8d349f1ff48b8312e332e342d6772488944242048b8616e6400000000004889442428488d54242041b80b000000488bcfe8a249f1ffb802000000488b5c24684883c4505fc3909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090"
+        },
+        {
+          "offset": 2382028,
+          "before": "89742430488b4424304889454048b8bf22a588a4e923314889442430488b442430",
+          "after": "bf8d69226559f8fba249bdd20da588a4e9233148b853594e415053452048894540"
+        },
+        {
+          "offset": 2382062,
+          "before": "89454848bf8d69226559f8fba2",
+          "after": "b858204d414445204248894548"
+        },
+        {
+          "offset": 2382076,
+          "before": "897c2430488b442430",
+          "after": "b859204752414e442f"
+        },
+        {
+          "offset": 2382087,
+          "before": "44244049bdd20da588a4e923314c896c2430488b4424304889442448660f6f4424400f5745",
+          "after": "455048b8312e332e342d67724889455848b8616e64000000000048894560488d4d80488d55"
+        },
+        {
+          "offset": 2382125,
+          "before": "660f7f45404c8d0597f02400488d5540488d4d80e83ac4e9ff",
+          "after": "41b823000000e8d8c1e2ff488d458090909090909090909090"
+        },
+        {
+          "offset": 2486036,
+          "before": "01",
+          "after": "05"
+        },
+        {
+          "offset": 2583317,
+          "before": "74",
+          "after": "eb"
+        },
+        {
+          "offset": 2600944,
+          "before": "48",
+          "after": "c3"
+        }
+      ]
+    },
+    {
+      "source_sha256": "afb11cb5b927f15e0a19a6364f007379acffeeeaacd3d9aaf29c43589380cc14",
+      "patched_sha256": "2369a6ce65ae8510b394e46418b6b67b9e9a80586606d1d21e514b4df76aa5e8",
+      "name": "SYNAPSE X MADE BY GRAND",
+      "version": "1.3.4-grand",
+      "user_agent": "SYNAPSE X MADE BY GRAND/1.3.4-grand",
+      "patches": [
+        {
+          "offset": 360,
+          "before": "a0",
+          "after": "a4"
+        },
+        {
+          "offset": 2486036,
+          "before": "01",
+          "after": "05"
+        }
+      ]
+    },
+    {
       "source_sha256": "30a41f2aee213b0cc6ad41b7025c0197ed2ba6de597d7d84576f229fbc854a58",
       "patched_sha256": "02ab6468f682b423029b7f130f6658faadc6f2b941dc56992e9e6a9ee1732368",
       "name": "SYNAPSE X MADE BY GRAND",

@@ -3,7 +3,7 @@
 An unofficial Synapse X inspired interface for the supplied Windows application.
 This project is not affiliated with the original Synapse X developers.
 
-**[Download Synapse X Executor v1.3.7](https://github.com/j4522419-code/synapse-x-executor/releases/tag/v1.3.7)**
+**[Download Synapse X Executor v1.3.8](https://github.com/j4522419-code/synapse-x-executor/releases/tag/v1.3.8)**
 
 This candidate addresses a possible filename regression in v1.3.4. Live attachment
 on the affected PC is still required to confirm whether it resolves the error.
@@ -11,6 +11,27 @@ on the affected PC is still required to confirm whether it resolves the error.
 ![Corrected purchase permission controls](docs/permissions-preview.jpg)
 
 The preview shows the actual Settings component in the browser test harness.
+
+## Version 1.3.8 — purchase confirmation visibility
+
+The inspected runtime's purchase confirmation requested foreground focus but
+did not request an always-on-top window. This update adds `MB_TOPMOST` to that
+specific dialog. Its existing text, OK/Cancel choices and purchase continuation
+checks are unchanged. Cancel or a failed dialog does not enter the OK path.
+The setting's **Allow** mode is unchanged.
+
+Only the dialog flag and PE checksum differ from the previous 2.5.4 branded
+DLL. The protected loader and application interface are unchanged. The launcher
+can migrate the previous branded DLL through a matching verified catalog rule;
+explicit source migrations are checked before old already-branded recognition.
+
+Isolated emulation verified the prompt text, flags, enabled/disabled setting
+and OK/Cancel/error branches. A first-party Windows dialog fixture verified
+the actual TopMost style and Cancel return. A real game purchase event and live
+attachment remain untested. This is a compatibility prerelease.
+
+After fresh extraction, fully restart Roblox before attaching so it can load
+the updated DLL. The existing private archive password is unchanged.
 
 ## Version 1.3.7 — Synapse X Executor
 
@@ -88,7 +109,7 @@ core. The supplied runtime and live Roblox attachment remain untested.
 
 ## Install
 
-1. Download `Synapse-X-Executor-v1.3.7-windows-x64.7z` from the release’s **Assets**.
+1. Download `Synapse-X-Executor-v1.3.8-windows-x64.7z` from the release’s **Assets**.
 2. Use [7-Zip](https://www.7-zip.org/) to extract the complete archive into a **fresh folder**, using the password shared privately by the distributor.
 3. Restart Roblox to unload an older runtime.
 4. Open the **top-level Synapse X Executor.exe**, keeping the complete `app` folder beside it.
@@ -144,7 +165,7 @@ Updater checks verify no duplicate root bin is recreated. See
 The password-protected release `.7z` is the runnable package. GitHub’s source-code ZIP contains the
 documentation, theme assets and [launcher source](launcher/AttachErrorHost.cs),
 not the full recovered native application source. The executor archive is the
-only uploaded asset on the v1.3.7 release.
+only uploaded asset on the v1.3.8 release.
 
 Tests cover Attach error extraction and propagation, native structured errors,
 the existing channel-repair path, confirmation timeouts, disconnect feedback,
@@ -162,7 +183,7 @@ the existing internal-menu patch and changes its shared identification function
 and default HTTP User-Agent value. The native GUI retains the original vendor runtime filenames in its
 download and launch references. The [identity patch source](theme/runtime-identity.py)
 is included for review. All other runtime bytes match the inspected source,
-apart from the documented menu patch and PE checksum. The protected helper
+apart from the documented menu patch, purchase-dialog TopMost flag and PE checksum. The protected helper
 executable and original internal filenames remain unchanged.
 
 Isolated CPU emulation checks both Lua string returns, the HTTP User-Agent's
