@@ -15,8 +15,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("Synapse X")]
 [assembly: AssemblyProduct("Synapse X")]
 [assembly: AssemblyDescription("Synapse X launcher and attachment error window")]
-[assembly: AssemblyVersion("1.3.5.0")]
-[assembly: AssemblyFileVersion("1.3.5.0")]
+[assembly: AssemblyVersion("1.3.6.0")]
+[assembly: AssemblyFileVersion("1.3.6.0")]
 
 sealed class ErrorWindow : Form {
     readonly TextBox reason;
@@ -59,10 +59,10 @@ sealed class Host : ApplicationContext {
         listener.Start(); new Thread(Accept) { IsBackground=true }.Start();
     }
     public void StartCore() {
-        new RuntimeLayout(AppDomain.CurrentDomain.BaseDirectory).Seed();
+        new RuntimeLayout(AppDomain.CurrentDomain.BaseDirectory).Prepare();
         string dir=Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"app","core");
         string file=Path.Combine(dir,"Synapse X.exe");
-        if(!File.Exists(file))throw new FileNotFoundException("Extract the complete ZIP, including its app folder.",file);
+        if(!File.Exists(file))throw new FileNotFoundException("Extract the complete download, including its app folder.",file);
         core=Process.Start(new ProcessStartInfo(file) { WorkingDirectory=dir, UseShellExecute=false });
         TaskbarIntegration.Watch(core,Application.ExecutablePath);
         core.EnableRaisingEvents=true; core.Exited+=(s,e)=>Queue(Stop);

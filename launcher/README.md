@@ -53,16 +53,25 @@ taskbar links and links to exact previous executable hashes in the embedded
 allowlist. It backs up links and leaves unrelated targets unchanged. Migration
 runs when the new root launcher opens; it does not start old executables.
 
-Before native startup, `RuntimeLayout` seeds original-name files in
-`app/core/bin` from the visible root `bin/Synapse X.dll` and `bin/Synapse X.exe`.
-Existing internal files are preserved. After verified preparation, the visible
-copies are synchronized. Copies use fixed installation paths, verified temporary
-files and atomic replacement. Original native download/launch filename
-references are retained. Internal names are necessary compatibility copies;
-they are not evidence of an older runtime version.
+The package contains one runtime folder, `app/core/bin`, with the original
+vendor filenames. `RuntimeLayout.Prepare` checks that both required files exist
+before native startup. It never creates a root bin, copies runtimes, or replaces
+existing runtime/settings files. Missing files produce an extraction error.
+
+`RefreshVisibility` applies only the ordinary Windows Hidden attribute to this
+fixed folder at startup and after successful runtime preparation. It preserves
+other attributes, skips a reparse-point folder and tolerates filesystems or
+permissions that cannot retain Hidden. It does not change ACLs, System flags,
+Explorer preferences, or unrelated paths. Hidden is not an access restriction.
+
+The release is packaged as a password-protected 7z archive with AES-256 and
+encrypted headers. The archive password is not compiled into the launcher;
+extraction is performed by the user's archive application. The packaged Hidden
+attribute survives 7-Zip extraction. A fresh extraction is required, since the
+launcher does not delete an old installation's root bin automatically.
 
 The candidate bundles the exact submitted 2.5.4 pair. Its DLL patch and runtime
-identity version are unchanged from v1.3.4, isolating the layout restoration.
+identity version are unchanged from v1.3.4, retaining compatibility while removing redundant copies.
 This does not establish that the protected loader accepts the DLL patch; live
 attachment on the affected PC remains necessary to confirm the reported error.
 

