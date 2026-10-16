@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.2
+
+- Remove the Agent Access Settings category, page, search rows and integration UI.
+- Disable persisted MCP enablement when loading this edition.
+- Set the internal menu key binding to none (`menu_keybind: 0`) in the configuration snapshot and bundled runtime settings.
+
 ## 1.2.1
 
 - Replace Execute jitter and trails with green activation feedback that fades back over 0.7 seconds.

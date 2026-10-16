@@ -10,7 +10,13 @@ This project is not affiliated with the original Synapse X developers.
 The preview shows the actual frontend components in a browser test harness.
 The Windows executable and a live Roblox connection have not been tested.
 
-## Version 1.2.1
+## Version 1.2.2
+
+- Remove Agent Access from Settings, including its search results and integration
+  registration controls. Force the saved MCP server preference off.
+- Disable the internal menu's Insert binding with `menu_keybind: 0` in the config
+  snapshot and bundled `bin/settings.json`. Restart Roblox and attach again after
+  upgrading so the runtime reloads its settings. Live in-game behavior is unverified.
 
 - New startup and sign-in presentation with three filling bars. Startup displays
   native download percentages when available and animated bars while waiting.
@@ -31,8 +37,8 @@ application uses its existing progress events and authentication flow.
 
 ## Install
 
-1. Download `Synapse-X-v1.2.1-windows-x64.zip` from the latest release's **Assets**.
-2. Extract every file into a new folder.
+1. Download `Synapse-X-v1.2.2-windows-x64.zip` from the latest release's **Assets**.
+2. Extract every file, including `bin/settings.json`, into a new folder.
 3. Open **Synapse X.exe**, keeping the three Microsoft runtime DLLs beside it.
 
 Existing sign-in requirements still apply. No authentication or native execution
