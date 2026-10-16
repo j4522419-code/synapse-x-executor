@@ -1,6 +1,6 @@
 {
   "release": "1.3.6",
-  "archive_sha256": "05841e458825eaa47037f30fa793de8491512e764f0acbd85b41e88e3afedeba",
+  "archive_sha256": "4c38d545a58f2d8a7fa3fca1a951f89c964c38dcd3618e9d4a23b4540e5323b7",
   "encrypted_archive_test_passed": true,
   "wrong_password_rejected": true,
   "header_names_hidden_without_password": true,
