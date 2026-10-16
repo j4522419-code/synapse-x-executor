@@ -21,8 +21,16 @@
     connection(value){connected=!!value;if(state==='busy')return;if(connected)state='success';else if(state==='success')state='idle';attachSync();}
   };
   window.synapseProgress=value=>typeof value==='number'&&Number.isFinite(value)?Math.max(0,Math.min(100,value)):null;
-  window.synapseInstallTabShortcuts=({isReady,newTab,closeTab})=>{
-    const handler=event=>{if(!(event.ctrlKey||event.metaKey)||event.altKey||event.shiftKey||event.isComposing||!isReady())return;const key=event.key.toLowerCase();if(key!=='t'&&key!=='w')return;event.preventDefault();event.stopImmediatePropagation();if(!event.repeat)(key==='t'?newTab:closeTab)();};
+  window.synapseInstallTabShortcuts=({isReady,newTab,closeTab,cycleTab})=>{
+    const handler=event=>{
+      if(!(event.ctrlKey||event.metaKey)||event.altKey||event.isComposing||!isReady())return;
+      const key=event.key.toLowerCase();
+      if(key==='tab'){
+        event.preventDefault();event.stopImmediatePropagation();cycleTab(event.shiftKey?-1:1);return;
+      }
+      if(event.shiftKey||(key!=='t'&&key!=='w'))return;
+      event.preventDefault();event.stopImmediatePropagation();if(!event.repeat)(key==='t'?newTab:closeTab)();
+    };
     addEventListener('keydown',handler,{capture:true});return()=>removeEventListener('keydown',handler,{capture:true});
   };
   window.synapseFX={execute,attach};

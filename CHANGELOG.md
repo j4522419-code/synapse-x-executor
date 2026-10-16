@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.4
+
+- Add Ctrl+Tab / Ctrl+Shift+Tab to select the next / previous workspace tab in displayed order.
+- Wrap at either end, handle zero or one open tab, and retain the existing Settings shortcut guard.
+
 ## 1.2.3
 
 - Remove the native runtime popup renderer and prevent its key from toggling cursor/menu state.

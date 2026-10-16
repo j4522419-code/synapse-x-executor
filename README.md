@@ -10,7 +10,10 @@ This project is not affiliated with the original Synapse X developers.
 The preview shows the actual frontend components in a browser test harness.
 The Windows executable and a live Roblox connection have not been tested.
 
-## Version 1.2.3
+## Version 1.2.4
+
+- **Ctrl+Tab** selects the next open tab. **Ctrl+Shift+Tab** selects the previous
+  tab. Both follow the displayed tab order and wrap at either end.
 
 - Disable the internal popup directly in the bundled runtime: skip its native
   hotkey toggle and return before its menu renderer. This replaces v1.2.2's
@@ -39,7 +42,7 @@ application uses its existing progress events and authentication flow.
 
 ## Install
 
-1. Download `Synapse-X-v1.2.3-windows-x64.zip` from the latest release's **Assets**.
+1. Download `Synapse-X-v1.2.4-windows-x64.zip` from the latest release's **Assets**.
 2. Extract **every file and the entire `bin` directory** into a fresh folder.
 3. Restart Roblox so an older loaded runtime is unloaded.
 4. Open **Synapse X.exe**, keeping the three Microsoft runtime DLLs beside it.
@@ -67,7 +70,8 @@ tab, while **Execute File** sends the selected file through the existing executi
 request. **Save File** saves to the application's scripts workspace. **Attach**
 retains the native attachment flow and its error handling.
 
-Shortcuts: Ctrl+T or Ctrl+N creates a tab, Ctrl+W closes the active tab, Ctrl+S
+Shortcuts: Ctrl+Tab selects the next tab, Ctrl+Shift+Tab selects the previous tab,
+Ctrl+T or Ctrl+N creates a tab, Ctrl+W closes the active tab, Ctrl+S
 saves, Ctrl+Enter executes, Ctrl+B toggles the scripts pane, and Ctrl+backtick
 toggles the console.
 
