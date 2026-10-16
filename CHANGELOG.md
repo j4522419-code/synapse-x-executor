@@ -6,7 +6,7 @@
 - Retain the original vendor filenames and the exact v1.3.5 runtime bytes.
 - Preserve runtime/settings files during startup; report an incomplete extraction clearly.
 - Set the runtime folder's ordinary Hidden attribute in the package and refresh it at startup/preparation.
-- Distribute a password-protected 7z archive with encrypted filenames; password: `noob1234@`.
+- Distribute a password-protected 7z archive with encrypted filenames; the password is shared privately by the distributor.
 - Verify password rejection, extraction, attributes, one-folder layout, unchanged binaries and updater behavior with disposable fixtures.
 - Require a fresh extraction; do not delete an existing installation's files automatically.
 - Remain a compatibility prerelease: the reported injection error is not confirmed fixed.

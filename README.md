@@ -20,7 +20,7 @@ The preview shows the actual Settings component in the browser test harness.
   startup and after runtime preparation. Users can reveal hidden files; this
   does not restrict access or change Windows permissions or Explorer settings.
 - Distribute a password-protected `.7z` archive with AES-256 encryption and
-  encrypted filenames. Extract with 7-Zip using **`noob1234@`**.
+  encrypted filenames. Extract with 7-Zip; obtain the password privately from the distributor.
 - Keep the exact v1.3.5 DLL/loader bytes and original native filenames. Those
   internal vendor names are retained for compatibility; do not rename them.
 - Keep runtime identity **SYNAPSE X MADE BY GRAND / 1.3.4-grand**.
@@ -75,7 +75,7 @@ core. The supplied runtime and live Roblox attachment remain untested.
 ## Install
 
 1. Download `Synapse-X-v1.3.6-windows-x64.7z` from the release’s **Assets**.
-2. Use [7-Zip](https://www.7-zip.org/) to extract the complete archive into a **fresh folder**, with password **`noob1234@`**.
+2. Use [7-Zip](https://www.7-zip.org/) to extract the complete archive into a **fresh folder**, using the password shared privately by the distributor.
 3. Restart Roblox to unload an older runtime.
 4. Open the **top-level Synapse X.exe**, keeping the complete `app` folder beside it.
 
