@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.3
+
+- Use SYNAPSE X MADE BY GRAND / 1.3.3-grand for both native Lua identification aliases.
+- Change the separate default HTTP User-Agent from the vendor name/version to SYNAPSE X MADE BY GRAND/1.3.3-grand.
+- Restore the original startup compatibility downloader, followed by launcher verification before native initialization.
+- Fetch version-matched branding/menu patches from the repository catalog, with an embedded offline fallback.
+- Verify full source/output hashes and patch bytes, retain a backup and replace the runtime atomically.
+- Stop preparation with a clear error for unknown runtimes until a matching catalog entry is published.
+- Keep the custom interface, native authentication and execution wrappers, and existing Settings preferences.
+- Verify identity in isolated emulation and updater behavior with disposable files; no live client or fresh sUNC report was run.
+
 ## 1.3.2
 
 - Rewrite all remaining Settings descriptions and remove unlisted controls/pages.

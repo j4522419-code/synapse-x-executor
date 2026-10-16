@@ -16,17 +16,18 @@
   };
   const endpoint='http://127.0.0.1:19347';let token='',queue=Promise.resolve(),dialog=null,generation=0;
   async function request(path,options={}){
-    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),2000);
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),path==='/runtime/prepare'?20000:2000);
     try{return await fetch(endpoint+path,{...options,signal:controller.signal,credentials:'omit',cache:'no-store'});}finally{clearTimeout(timer);}
   }
-  async function notify(payload){
+  async function notify(payload,path='/notify'){
     for(let attempt=0;attempt<2;attempt++){
       if(!token){const response=await request('/session');if(!response.ok)throw Error('Error window unavailable');const session=await response.json();if(session.host!=='synapse-x-error-host'||session.version!==1||typeof session.token!=='string')throw Error('Unexpected error window host');token=session.token;}
-      const response=await request('/notify',{method:'POST',headers:{'Content-Type':'application/json','X-Synapse-Token':token},body:JSON.stringify(payload)});
-      if(response.status===403){token='';continue;}if(!response.ok)throw Error('Error window unavailable');return;
+      const response=await request(path,{method:'POST',headers:{'Content-Type':'application/json','X-Synapse-Token':token},body:JSON.stringify(payload)});
+      if(response.status===403){token='';continue;}const result=await response.json();if(!response.ok){const error=Error(result.error||'Runtime host unavailable');error.name='RuntimeResponseError';throw error;}return result;
     }
     throw Error('Error window session expired');
   }
+  window.synapsePrepareRuntime=async()=>{try{const result=await notify({},'/runtime/prepare');if(result.ok!==true||result.name!=='SYNAPSE X MADE BY GRAND'||!result.version||result.user_agent!==result.name+'/'+result.version){const error=Error('Runtime branding verification returned an unexpected identity.');error.name='RuntimeResponseError';throw error;}return result;}catch(error){if(error.name==='RuntimeResponseError')throw error;throw Error('Runtime branding requires the main launcher. Extract the complete ZIP and open the top-level Synapse X.exe, then retry.');}};
   function closeFallback(){if(dialog){dialog.close();dialog.remove();dialog=null;}}
   function showFallback(reason){
     closeFallback();const previous=document.activeElement;dialog=document.createElement('dialog');dialog.className='sx-attach-error';dialog.setAttribute('aria-labelledby','sx-attach-error-title');

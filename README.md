@@ -9,38 +9,30 @@ This project is not affiliated with the original Synapse X developers.
 
 The preview shows the actual Settings component in the browser test harness.
 
-## Version 1.3.2
+## Version 1.3.3
 
-- Rebuild Settings with only **Appearance**, **Editor**, **Client** and **Sign out** pages.
-- Rewrite every visible setting description. Remove the theme selector and keep
-  Synapse X as the fixed theme.
-- Keep Streamer Mode and Tooltips in Appearance. Editor contains only Insert
-  Spaces, Word Wrap, Minimap, Line Numbers, Bracket Colors, Smooth Cursor and
-  Smooth Scrolling. All seven start enabled, including once when upgrading;
-  later changes are saved normally.
-- Remove all other visible controls. Hidden folding, autocomplete, diagnostics
-  and multi-instance defaults remain enabled. The Console settings page and
-  scrollback control are removed; output, timestamps, output/error redirection
-  and clear-on-teleport stay enabled, while the saved scrollback limit is kept.
-- Replace the purchase prompt’s hand icon with a question-message icon and an
-  explicit **Ask permission** label. Keep the existing purchase-permission behavior.
-- Replace Account with a dedicated **Sign out** page. Its visible Sign out button
-  invokes the original native logout flow and returns to sign-in after success.
-- The top-level launcher now requests administrator privileges through Windows
-  UAC using an embedded `requireAdministrator` manifest.
+- Both `identifyexecutor()` and `getexecutorname()` report
+  **SYNAPSE X MADE BY GRAND**, version **1.3.3-grand**.
+- The default HTTP User-Agent now also reports
+  **SYNAPSE X MADE BY GRAND/1.3.3-grand**. Earlier builds changed the Lua
+  identification functions but retained a separate native HTTP identity value.
+- Restore the original vendor compatibility downloader at startup. Before native
+  initialization, the launcher verifies the downloaded runtime and applies a
+  matching branding/menu patch from this repository's runtime catalog.
+- Check for new matching catalog entries automatically, with a bundled catalog
+  for offline use. Validate source bytes and complete source/output SHA-256
+  hashes, preserve a backup, and replace the prepared runtime atomically.
+- An unfamiliar vendor runtime shows a clear error until a matching patch is
+  published. Future vendor binaries require inspection and a matching catalog
+  entry; this build cannot automatically adapt old offsets to unknown code.
 
-The main Start tab remains separate from editable script tabs. New Script, the
-plus button and Ctrl+T still create script tabs. The runtime reports **Synapse X**
-and **1.3.2-grand** through `identifyexecutor()` / `getexecutorname()`.
+Existing recorded test reports keep their stored labels. After installing into
+a fresh folder, restart Roblox and run a **new** test to check the new label.
+No test capabilities or scores were changed, and no fresh live sUNC report was
+generated during verification.
 
-Settings checks cover the visible allowlist, enabled defaults, preference
-migration and persistence, retained hidden values and scrollback, purchase
-selection, search, and the unchanged native sign-out route. Browser checks cover
-the rendered pages, all seven switches, persistence after reload, and keyboard
-selection of purchase permissions. Package checks read the actual embedded
-administrator manifest without launching an elevated process.
-
-![Dedicated Sign out page](docs/signout-preview.jpg)
+The simplified Settings, enabled editor defaults, saved preferences, sign-out
+flow, main Start tab, editor tabs, shortcuts and Attach feedback are retained.
 
 ## Other features
 
@@ -57,22 +49,27 @@ administrator manifest without launching an elevated process.
 
 ## Install
 
-1. Download `Synapse-X-v1.3.2-windows-x64.zip` from the release’s **Assets**.
+1. Download `Synapse-X-v1.3.3-windows-x64.zip` from the release’s **Assets**.
 2. Extract the **complete ZIP** into a new folder, including the entire `app` folder.
 3. Restart Roblox to unload an older runtime.
 4. Open the **top-level Synapse X.exe**, keeping the `app` folder beside it.
 
-The root executable is a small launcher and Windows error-window host. It starts
-the main interface inside `app`. Windows x64 with .NET Framework 4.x is required.
-Accept the normal Windows UAC prompt when opening the root launcher. Its child
-interface runs in the same elevated context. Opening the inner executable
-directly uses an in-app error dialog when the host
-is unavailable; that fallback does not stay above other Windows apps.
+The root executable launches the interface inside `app`, prepares compatibility
+updates, and hosts the Windows error window. Windows x64 with .NET Framework 4.x
+is required. Accept its normal Windows UAC prompt; the child interface inherits
+the elevated context. **Launch the top-level executable**: the inner executable
+cannot complete runtime preparation on its own.
 
-This version bundles its inspected runtime in `app/bin`. Automatic vendor runtime
-downloads are skipped to preserve the existing internal-menu removal. Update the
-complete application from this repository’s releases; future Roblox changes may
-require a compatible release. Existing sign-in requirements still apply.
+The original vendor downloader checks for executor compatibility updates at
+startup. The launcher then reads [runtime/catalog.json](runtime/catalog.json)
+over HTTPS from this repository, falling back to its embedded catalog if the
+remote catalog cannot be read. Only a matching, verified runtime is initialized.
+The pre-branding copy is saved as `app/bin/Potassium.dll.before-branding`.
+
+New catalog entries can support future vendor runtimes without replacing the
+custom interface. An unknown runtime waits for a matching entry; retry after it
+is published. The vendor GUI updater stays disabled so it cannot replace this
+theme. Existing native sign-in requirements still apply.
 
 ## Editor and appearance
 
@@ -110,14 +107,25 @@ token checks passed. A browser integration test delivered the error to that
 native window. The browser preview also verified wrapping, collapse/reopen and
 the connected button’s animation styles.
 
-Package checks verify embedded frontend assets, PE resources, checksums and
-relocations. The supplied core code sections retain the previous release’s
-branding-only edits; native authentication and execution wrappers are preserved.
-The bundled runtime’s internal-menu patch is unchanged from v1.2.3; v1.3.2 also
-updates its shared identification function. The [identity patch source](theme/runtime-identity.py)
-is included for review. All other runtime bytes match the inspected source, apart
-from the previously documented menu patch and the PE checksum.
-**The supplied native core, elevated application launch and a live Roblox attachment have not been run.**
+Package checks verify embedded frontend assets, PE resources, checksums,
+relocations, the administrator manifest and the embedded runtime catalog. Native
+authentication and execution wrappers are preserved. The bundled runtime keeps
+the existing internal-menu patch and changes its shared identification function
+and default HTTP User-Agent value. The [identity patch source](theme/runtime-identity.py)
+is included for review. All other runtime bytes match the inspected source,
+apart from the documented menu patch and PE checksum.
+
+Isolated CPU emulation checks both Lua string returns, the HTTP User-Agent's
+actual string allocation/cleanup, stack integrity and saved registers. Updater
+tests use disposable runtime copies to check offline preparation, backups,
+already-patched detection, simulated future catalog entries and rejection of
+unknown files, invalid patches and incorrect output digests. Startup tests check
+download → branding verification → native initialization and error handling.
+The local bridge tests check authentication, session renewal and test-mode
+refusal to install a runtime.
+
+**The supplied native core, elevated application launch, live Roblox attachment
+and a fresh live sUNC test have not been run.**
 
 The theme keeps existing backend service/documentation URLs for compatibility.
 See [NOTICE.txt](NOTICE.txt), [theme assets](theme/), and [launcher build notes](launcher/README.md).

@@ -1,0 +1,20 @@
+{
+  "release": "1.3.3",
+  "startup_order": [
+    "vendor_compatibility_download",
+    "branding_verification",
+    "native_initialization"
+  ],
+  "bundled_offline_catalog": true,
+  "source_and_target_sha256_checked": true,
+  "backup_verified": true,
+  "already_patched_detection": true,
+  "simulated_future_catalog_entry": true,
+  "unknown_runtime_rejected_without_write": true,
+  "invalid_output_digest_rejected_without_write": true,
+  "out_of_bounds_patch_rejected_without_write": true,
+  "bridge_session_authentication_verified": true,
+  "test_mode_installation_denied": true,
+  "test_runtime_files": "disposable copies",
+  "live_vendor_update_tested": false
+}

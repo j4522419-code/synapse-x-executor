@@ -15,8 +15,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("Synapse X")]
 [assembly: AssemblyProduct("Synapse X")]
 [assembly: AssemblyDescription("Synapse X launcher and attachment error window")]
-[assembly: AssemblyVersion("1.3.2.0")]
-[assembly: AssemblyFileVersion("1.3.2.0")]
+[assembly: AssemblyVersion("1.3.3.0")]
+[assembly: AssemblyFileVersion("1.3.3.0")]
 
 sealed class ErrorWindow : Form {
     readonly TextBox reason;
@@ -47,12 +47,14 @@ sealed class Host : ApplicationContext {
     readonly TcpListener listener=new TcpListener(IPAddress.Loopback,Port);
     readonly string token;
     readonly bool testing;
+    readonly RuntimeBranding runtime;
     volatile bool stopping;
     ErrorWindow popup;
     Process core;
     [DllImport("user32.dll",EntryPoint="GetWindowLongPtrW")] static extern IntPtr WindowLong(IntPtr hwnd,int index);
     public Host(bool test) {
-        testing=test; var bytes=new byte[32]; using(var rng=RandomNumberGenerator.Create())rng.GetBytes(bytes);
+        testing=test;runtime=new RuntimeBranding(AppDomain.CurrentDomain.BaseDirectory,RuntimeBranding.DownloadCatalog);
+        var bytes=new byte[32]; using(var rng=RandomNumberGenerator.Create())rng.GetBytes(bytes);
         token=Convert.ToBase64String(bytes); var handle=dispatch.Handle;
         listener.Start(); new Thread(Accept) { IsBackground=true }.Start();
     }
@@ -102,6 +104,10 @@ sealed class Host : ApplicationContext {
             string[] first=lines[0].Split(' '); if(first.Length!=3)return;
             var headers=new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
             for(int i=1;i<lines.Length;i++) { int split=lines[i].IndexOf(':'); if(split>0)headers[lines[i].Substring(0,split)]=lines[i].Substring(split+1).Trim(); }
+            int length=0;
+            if((first[0]=="POST"&&!headers.ContainsKey("Content-Length"))||(headers.ContainsKey("Content-Length")&&(!Int32.TryParse(headers["Content-Length"],out length)||length<0||length>65536))) { Reply(stream,413,"",new{error="Invalid request size"});return; }
+            var payload=new byte[length];int read=0;
+            while(read<length) { int n=stream.Read(payload,read,length-read);if(n==0)return;read+=n; }
             string origin=headers.ContainsKey("Origin")?headers["Origin"]:"";
             if(!AllowedOrigin(origin)) { Reply(stream,403,origin,new{error="Origin denied"}); return; }
             if(first[0]=="OPTIONS") { Reply(stream,200,origin,new{ok=true}); return; }
@@ -114,12 +120,14 @@ sealed class Host : ApplicationContext {
                     reason=popup!=null&&!popup.IsDisposed?popup.Reason:""}));
                 Reply(stream,200,origin,result); return;
             }
-            if(first[0]!="POST"||first[1]!="/notify") { Reply(stream,404,origin,new{error="Not found"}); return; }
-            int length;
-            if(!headers.ContainsKey("Content-Length")||!Int32.TryParse(headers["Content-Length"],out length)||length<0||length>65536) { Reply(stream,413,origin,new{error="Invalid request size"}); return; }
-            var payload=new byte[length]; int read=0;
-            while(read<length) { int n=stream.Read(payload,read,length-read); if(n==0)return; read+=n; }
+            if(first[0]!="POST"||(first[1]!="/notify"&&first[1]!="/runtime/prepare")) { Reply(stream,404,origin,new{error="Not found"}); return; }
             var data=new JavaScriptSerializer().Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(payload));
+            if(first[1]=="/runtime/prepare") {
+                if(testing) { Reply(stream,403,origin,new{error="Runtime installation is disabled in popup test mode"});return; }
+                try { Reply(stream,200,origin,runtime.Prepare()); }
+                catch(Exception failure) { Reply(stream,409,origin,new{error=failure.Message}); }
+                return;
+            }
             string kind=data.ContainsKey("type")?data["type"] as string:"";
             if(kind=="error"&&data.ContainsKey("message")&&data["message"] is string) {
                 string message=((string)data["message"]).Trim(); if(message.Length==0)message="No detailed reason was returned by the runtime.";
