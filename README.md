@@ -11,6 +11,14 @@ The preview shows the actual Settings component in the browser test harness.
 
 ## Version 1.3.3
 
+**Runtime catalog fix — 17 October 2026:** The catalog now supports the vendor's
+2.5.4 runtime with hash beginning `6f25af29fee6`. This fixes the "no matching
+branding patch" startup error for that file. Existing v1.3.3 installations obtain
+the rule automatically: close and reopen the top-level launcher, or use Retry.
+No new ZIP is required. The 2.5.4 patch preserves the full requested identity
+and the internal-menu removal. Both identity paths passed isolated emulation;
+live Roblox attachment has not been tested.
+
 - Both `identifyexecutor()` and `getexecutorname()` report
   **SYNAPSE X MADE BY GRAND**, version **1.3.3-grand**.
 - The default HTTP User-Agent now also reports

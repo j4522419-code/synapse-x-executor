@@ -1,5 +1,13 @@
 # Changelog
 
+## Runtime catalog update — 2026-10-17
+
+- Add a hash-matched rule for the vendor 2.5.4 runtime (`6f25af29fee6`).
+- Resolve its missing-patch startup error in existing v1.3.3 installations without replacing their launcher.
+- Inspect the new function locations and protocol constants; preserve the requested identity and menu removal.
+- Verify both identity paths in isolated emulation and the existing launcher updater with disposable copies.
+- Keep the previous runtime rule and all other runtime bytes unchanged.
+
 ## 1.3.3
 
 - Use SYNAPSE X MADE BY GRAND / 1.3.3-grand for both native Lua identification aliases.
