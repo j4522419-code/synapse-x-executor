@@ -1,0 +1,20 @@
+{
+  "source_sha256": "30a41f2aee213b0cc6ad41b7025c0197ed2ba6de597d7d84576f229fbc854a58",
+  "patched_sha256": "d0431d1c78d9c47eeb92b81101a3fb232ac2d292093f7a24bc34419e412ef794",
+  "changes": [
+    {
+      "rva": "0x277ac5",
+      "before": "74",
+      "after": "eb",
+      "purpose": "Skip internal menu hotkey toggle"
+    },
+    {
+      "rva": "0x27bfa0",
+      "before": "48",
+      "after": "c3",
+      "purpose": "Disable internal menu renderer"
+    }
+  ],
+  "all_other_runtime_bytes_unchanged": true,
+  "live_runtime_tested": false
+}

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.3
+
+- Remove the native runtime popup renderer and prevent its key from toggling cursor/menu state.
+- Bundle the inspected runtime and skip vendor runtime downloads that would overwrite the UI patch.
+- Fix the trailing `m` in the actual native window-caption constructor to read Synapse X.
+- Seed new script tabs with `print("Grand was here");` through both Ctrl+T and the new-tab button.
+- Preserve existing/opened script contents, authentication and script execution.
+
 ## 1.2.2
 
 - Remove the Agent Access Settings category, page, search rows and integration UI.

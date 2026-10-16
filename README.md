@@ -10,14 +10,16 @@ This project is not affiliated with the original Synapse X developers.
 The preview shows the actual frontend components in a browser test harness.
 The Windows executable and a live Roblox connection have not been tested.
 
-## Version 1.2.2
+## Version 1.2.3
 
-- Remove Agent Access from Settings, including its search results and integration
-  registration controls. Force the saved MCP server preference off.
-- Disable the internal menu's Insert binding with `menu_keybind: 0` in the config
-  snapshot and bundled `bin/settings.json`. Restart Roblox and attach again after
-  upgrading so the runtime reloads its settings. Live in-game behavior is unverified.
-
+- Disable the internal popup directly in the bundled runtime: skip its native
+  hotkey toggle and return before its menu renderer. This replaces v1.2.2's
+  ineffective settings-only change.
+- Correct the native Alt+Tab caption from **Synapse m** to **Synapse X** by fixing
+  the second name constructor's trailing character.
+- Start every new script tab with `print("Grand was here");`, including Ctrl+T
+  and the new-tab button. Existing tabs and imported scripts are preserved.
+- Agent Access remains removed, and its saved server setting remains off.
 - New startup and sign-in presentation with three filling bars. Startup displays
   native download percentages when available and animated bars while waiting.
 - **Ctrl+T** creates a script tab; **Ctrl+W** closes the active one. Capture-phase
@@ -37,9 +39,15 @@ application uses its existing progress events and authentication flow.
 
 ## Install
 
-1. Download `Synapse-X-v1.2.2-windows-x64.zip` from the latest release's **Assets**.
-2. Extract every file, including `bin/settings.json`, into a new folder.
-3. Open **Synapse X.exe**, keeping the three Microsoft runtime DLLs beside it.
+1. Download `Synapse-X-v1.2.3-windows-x64.zip` from the latest release's **Assets**.
+2. Extract **every file and the entire `bin` directory** into a fresh folder.
+3. Restart Roblox so an older loaded runtime is unloaded.
+4. Open **Synapse X.exe**, keeping the three Microsoft runtime DLLs beside it.
+
+This version bundles its inspected runtime. Automatic vendor runtime downloads
+are skipped to keep the menu-removal patch from being overwritten. **Update the
+complete application from this repository's releases**; future Roblox changes
+may require a new compatible release. Live in-game behavior remains unverified.
 
 Existing sign-in requirements still apply. No authentication or native execution
 implementation is replaced by this theme.
@@ -76,9 +84,10 @@ so it cannot overwrite this customized interface.
 
 Checks cover local file import, clear/edit routing and undo boundaries, toolbar
 control states, branding, embedded assets, PE resources, checksum and relocations.
-Native code sections match the baseline except for the explicitly verified
-product-name data operands. Native authentication/session transitions and command
-wrappers are preserved. Live Windows Alt+Tab behavior and Roblox attachment have
-not been verified.
+Launcher code sections match the baseline except the two native name operands.
+The runtime DLL differs only at its menu-toggle branch, menu-renderer entry and
+PE checksum; the bundled injector and decompiler match the inspected originals.
+Authentication/session logic and native command wrappers are preserved. Live
+Windows Alt+Tab, the in-game popup removal and Roblox attachment remain unverified.
 
 See [NOTICE.txt](NOTICE.txt) and [logo edit details](theme/logo-prompt.txt).
