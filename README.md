@@ -1,0 +1,56 @@
+# Synapse X — themed edition
+
+An unofficial Synapse X inspired interface for the supplied Windows application.
+This project is not affiliated with the original Synapse X developers.
+
+**[Download the Windows build](https://github.com/j4522419-code/synapse-x-potassium-theme/releases/latest)**
+
+![Synapse X interface preview](docs/interface-preview.png)
+
+The preview shows the actual frontend components in a browser test harness.
+The Windows executable and a live Roblox connection have not been tested.
+
+## Install
+
+1. Download `Synapse-X-windows-x64.zip` from the latest release's **Assets**.
+2. Extract every file into a new folder.
+3. Open **Synapse X.exe**, keeping the three Microsoft runtime DLLs beside it.
+
+Existing sign-in requirements still apply. No authentication or native execution
+implementation is replaced by this theme.
+
+## Theme
+
+- Centered **Synapse X** title, matching executable/process name and Windows metadata.
+- Dark-background logo in the application icon and top-left title bar.
+- Charcoal window, plain gray editor, compact tabs and a right-hand scripts pane.
+- Bottom controls: **Execute · Clear · Open File · Execute File · Save File · Attach**.
+- Gear button for Settings, with separate preferences and tabs for this edition.
+- No cosmic background, alternate-name chooser or extra launcher.
+
+**Execute** uses the existing active-script action. **Clear** empties the editor
+with its normal undo boundaries. **Open File** loads a local script into a new
+tab, while **Execute File** sends the selected file through the existing execution
+request. **Save File** saves to the application's scripts workspace. **Attach**
+retains the native attachment flow and its error handling.
+
+Shortcuts: Ctrl+N creates a tab, Ctrl+S saves, Ctrl+Enter executes, Ctrl+B toggles
+the scripts pane, and Ctrl+backtick toggles the console.
+
+## Files and verification
+
+The release ZIP is the runnable package. GitHub's source-code ZIP contains these
+docs and customization assets, not the full native application source.
+Compare the downloaded package's SHA-256 with `SHA256SUMS.txt` on the same release.
+
+The theme stylesheet and icon are available in [theme/](theme/). Visible branding
+and frontend storage identifiers use Synapse X naming; existing backend service
+and documentation URLs remain compatible. The vendor GUI update check is disabled
+so it cannot overwrite this customized interface.
+
+Checks cover local file import, clear/edit routing and undo boundaries, toolbar
+control states, branding, embedded assets, PE resources, checksum and relocations.
+Native code sections were verified unchanged. End-to-end Roblox attachment has
+not been verified.
+
+See [NOTICE.txt](NOTICE.txt) and [logo edit details](theme/logo-prompt.txt).

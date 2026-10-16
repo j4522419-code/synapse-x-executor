@@ -1,0 +1,2 @@
+Built-in image generation tool, editing the user-supplied logo reference.
+Prompt: Preserve the large black S with a thin white outline over red/orange, green, cyan/blue and purple angular polygons. Replace the pale background and gaps with very dark charcoal #161616. Crisp square Windows icon; no added text, mockup, glossy effects or extra symbols.
