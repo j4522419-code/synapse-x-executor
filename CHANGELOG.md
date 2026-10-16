@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.2
+
+- Rewrite all remaining Settings descriptions and remove unlisted controls/pages.
+- Fix the theme to Synapse X and remove its selector.
+- Default the seven requested editor switches to on, including once on upgrade, while preserving later choices.
+- Preserve enabled hidden defaults and console behavior; keep the saved scrollback limit without its control.
+- Replace the purchase prompt hand with an Ask permission question-message icon.
+- Replace Account with a dedicated Sign out page wired to the existing native logout flow.
+- Embed requireAdministrator in the root launcher so Windows requests elevation on launch.
+- Update identification metadata to Synapse X / 1.3.2-grand.
+
 ## 1.3.1
 
 - Fix the home layout overriding Vue’s hidden state and covering newly created script editors.

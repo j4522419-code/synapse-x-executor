@@ -5,27 +5,42 @@ This project is not affiliated with the original Synapse X developers.
 
 **[Download the Windows build](https://github.com/j4522419-code/synapse-x-potassium-theme/releases/latest)**
 
-![New Script opens a separate editor tab](docs/script-preview.jpg)
+![Simplified Editor settings](docs/settings-preview.jpg)
 
-The preview uses the actual frontend in a browser harness with sample filenames.
-The editor text was entered through the interface while testing the New Script fix.
+The preview shows the actual Settings component in the browser test harness.
 
-## Version 1.3.1
+## Version 1.3.2
 
-- Fix New Script showing the home page over the editor. The layout’s forced
-  display rule is corrected so home appears only on **Start**.
-- Restore the main **Start** tab. The home-page New Script action, plus button
-  and Ctrl+T create separate editable script tabs with the existing template.
-- `identifyexecutor()` and its `getexecutorname()` alias report **Synapse X**,
-  version **1.3.1-grand**, so supported test reports identify this themed build.
-  This changes identification metadata only, without changing test behavior or scores.
+- Rebuild Settings with only **Appearance**, **Editor**, **Client** and **Sign out** pages.
+- Rewrite every visible setting description. Remove the theme selector and keep
+  Synapse X as the fixed theme.
+- Keep Streamer Mode and Tooltips in Appearance. Editor contains only Insert
+  Spaces, Word Wrap, Minimap, Line Numbers, Bracket Colors, Smooth Cursor and
+  Smooth Scrolling. All seven start enabled, including once when upgrading;
+  later changes are saved normally.
+- Remove all other visible controls. Hidden folding, autocomplete, diagnostics
+  and multi-instance defaults remain enabled. The Console settings page and
+  scrollback control are removed; output, timestamps, output/error redirection
+  and clear-on-teleport stay enabled, while the saved scrollback limit is kept.
+- Replace the purchase prompt’s hand icon with a question-message icon and an
+  explicit **Ask permission** label. Keep the existing purchase-permission behavior.
+- Replace Account with a dedicated **Sign out** page. Its visible Sign out button
+  invokes the original native logout flow and returns to sign-in after success.
+- The top-level launcher now requests administrator privileges through Windows
+  UAC using an embedded `requireAdministrator` manifest.
 
-The identification function was checked before and after modification in an
-isolated CPU emulator. Checks verified the two string values, both aliases’
-shared registration, the original Lua string helper, stack balance and preserved
-registers. A live sUNC run and a results-page URL have not been generated.
-The function’s documented return format is described in the
-[official sUNC documentation](https://docs.sunc.io/Miscellaneous/identifyexecutor/).
+The main Start tab remains separate from editable script tabs. New Script, the
+plus button and Ctrl+T still create script tabs. The runtime reports **Synapse X**
+and **1.3.2-grand** through `identifyexecutor()` / `getexecutorname()`.
+
+Settings checks cover the visible allowlist, enabled defaults, preference
+migration and persistence, retained hidden values and scrollback, purchase
+selection, search, and the unchanged native sign-out route. Browser checks cover
+the rendered pages, all seven switches, persistence after reload, and keyboard
+selection of purchase permissions. Package checks read the actual embedded
+administrator manifest without launching an elevated process.
+
+![Dedicated Sign out page](docs/signout-preview.jpg)
 
 ## Other features
 
@@ -42,14 +57,16 @@ The function’s documented return format is described in the
 
 ## Install
 
-1. Download `Synapse-X-v1.3.1-windows-x64.zip` from the release’s **Assets**.
+1. Download `Synapse-X-v1.3.2-windows-x64.zip` from the release’s **Assets**.
 2. Extract the **complete ZIP** into a new folder, including the entire `app` folder.
 3. Restart Roblox to unload an older runtime.
 4. Open the **top-level Synapse X.exe**, keeping the `app` folder beside it.
 
 The root executable is a small launcher and Windows error-window host. It starts
 the main interface inside `app`. Windows x64 with .NET Framework 4.x is required.
-Opening the inner executable directly uses an in-app error dialog when the host
+Accept the normal Windows UAC prompt when opening the root launcher. Its child
+interface runs in the same elevated context. Opening the inner executable
+directly uses an in-app error dialog when the host
 is unavailable; that fallback does not stay above other Windows apps.
 
 This version bundles its inspected runtime in `app/bin`. Automatic vendor runtime
@@ -96,11 +113,11 @@ the connected button’s animation styles.
 Package checks verify embedded frontend assets, PE resources, checksums and
 relocations. The supplied core code sections retain the previous release’s
 branding-only edits; native authentication and execution wrappers are preserved.
-The bundled runtime’s internal-menu patch is unchanged from v1.2.3; v1.3.1 also
+The bundled runtime’s internal-menu patch is unchanged from v1.2.3; v1.3.2 also
 updates its shared identification function. The [identity patch source](theme/runtime-identity.py)
 is included for review. All other runtime bytes match the inspected source, apart
 from the previously documented menu patch and the PE checksum.
-**The supplied native core and a live Roblox attachment have not been run.**
+**The supplied native core, elevated application launch and a live Roblox attachment have not been run.**
 
 The theme keeps existing backend service/documentation URLs for compatibility.
 See [NOTICE.txt](NOTICE.txt), [theme assets](theme/), and [launcher build notes](launcher/README.md).

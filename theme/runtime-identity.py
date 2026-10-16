@@ -2,7 +2,7 @@
 import struct
 
 NAME='Synapse X'
-VERSION='1.3.1-grand'
+VERSION='1.3.2-grand'
 IDENTIFY_RVA=0x2439A0
 IDENTIFY_END=0x243A97
 TAIL_RVA=0x243A3C
