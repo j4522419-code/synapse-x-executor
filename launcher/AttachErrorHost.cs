@@ -15,8 +15,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("Synapse X Executor")]
 [assembly: AssemblyProduct("Synapse X Executor")]
 [assembly: AssemblyDescription("Synapse X Executor launcher and attachment error window")]
-[assembly: AssemblyVersion("1.3.8.0")]
-[assembly: AssemblyFileVersion("1.3.8.0")]
+[assembly: AssemblyVersion("1.3.9.0")]
+[assembly: AssemblyFileVersion("1.3.9.0")]
 
 sealed class ErrorWindow : Form {
     readonly TextBox reason;

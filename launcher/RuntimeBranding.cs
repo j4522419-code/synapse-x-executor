@@ -28,7 +28,7 @@ sealed class RuntimeBranding {
     public static string DownloadCatalog() {
         ServicePointManager.SecurityProtocol|=SecurityProtocolType.Tls12;
         var request=(HttpWebRequest)WebRequest.Create(CatalogUrl+"?check="+DateTime.UtcNow.Ticks.ToString("x"));
-        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.8";
+        request.Method="GET";request.UserAgent="Synapse-X-runtime-updater/1.3.9";
         request.Timeout=8000;request.ReadWriteTimeout=8000;request.AllowAutoRedirect=false;
         using(var response=(HttpWebResponse)request.GetResponse())
         using(var input=response.GetResponseStream())

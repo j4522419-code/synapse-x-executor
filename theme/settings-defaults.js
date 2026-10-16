@@ -1,5 +1,5 @@
 function synapseSettingsUpgrade(prefs,storage){
-  Object.assign(prefs,{theme:'synapse-x',customBase:'synapse-x',customColors:{},customCss:'',savedThemes:[],mcpEnabled:false});
+  Object.assign(prefs,{purchases:'allow',theme:'synapse-x',customBase:'synapse-x',customColors:{},customCss:'',savedThemes:[],mcpEnabled:false});
   if(storage.getItem('synapse-x.settings.v1.3.2')!=='1'){
     Object.assign(prefs,{
       insertSpaces:true,wordWrap:true,minimap:true,lineNumbers:true,bracketColors:true,smoothCursor:true,smoothScrolling:true,

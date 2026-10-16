@@ -1,0 +1,12 @@
+{
+  "release": "1.3.9",
+  "purchase_control_removed": true,
+  "empty_client_page_removed": true,
+  "old_preferences_migrated_to_allow": true,
+  "native_block_purchases_always_false": true,
+  "packaged_block_purchases_false": true,
+  "startup_waits_for_native_settings": true,
+  "runtime_and_loader_bytes_unchanged_from_v138": true,
+  "real_purchase_triggered": false,
+  "live_attachment_tested": false
+}

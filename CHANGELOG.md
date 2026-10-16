@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.3.9 — remove custom purchase approval
+
+- Remove Block in-game purchases and the empty Client settings page.
+- Migrate old Ask permission choices to Allow; always send the disabled native purchase flag.
+- Package BlockPurchases=false and wait for native settings to be applied during initialization.
+- Preserve Roblox's normal purchase confirmation and the previous runtime/loader bytes.
+- Retain the private password, one hidden runtime folder and executor-only uploaded asset.
+- Verify settings removal, preference migration, native snapshot/defaults, startup and archive integrity without a real purchase.
+
 ## 1.3.8 — purchase confirmation visibility
 
 - Add MB_TOPMOST to the existing native purchase confirmation, retaining its foreground flag and OK/Cancel behavior.
